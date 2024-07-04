@@ -74,7 +74,12 @@ function void jumpUp(int location, int c){
 	let k = 0;
 	do Main.draw(location);
 
-
+	// do Main.draw(location - 5);
+	// do Main.draw(location - 5 - (64*3));
+	// do Main.draw(location - 5 - (64*12));
+	// do Main.draw(location - 5 - (64*28));
+	// do Main.draw(location - 5 - (64*51));
+	// do Main.draw(location - 5 - (64*80));
 	//12 fps
 	while(k < h_max){
 		let c = -(k+1);
@@ -82,10 +87,6 @@ function void jumpUp(int location, int c){
 		let t1 = (-v0 + D) * 100 / (2 * (-80)); let t2 = (-v0 - D) * 100 / (2 * (-80)); 
 		let wait_time = t1 * 10 - last_time;
 
-	
-		
-	
-		
 		do Sys.wait(wait_time);
 		let last_time = t1 * 10;
 		do Main.drawAbove(location - (64*k));
@@ -96,20 +97,13 @@ function void jumpUp(int location, int c){
 	do Output.printInt(h_max);
 	do Output.printChar(" ");
 	do Output.printInt(k);
-	let last_time = 1000;
+	let last_time = v0 * 100 / 160 * 10;
 	while(k > 0){
-		do Output.printChar(" ");
-		// * 100 pa * 10 jer treba *1000
-		// let t1 = (-v0 + D) * 100 / (2 * (20));  let t2 = (-v0 - D) * 100 / (2 * (20)); 
 		let c = -k + 1;
-		do Output.printChar(" ");
 		let D = Math.sqrt(v0*v0 - (4*(-80)*c));
 		let t1 = (-v0 + D) * 100 / (2 * (-80)); let t2 = (-v0 - D) * 100 / (2 * (-80)); 
 		let wait_time = last_time - (t1 * 10);
 
-
-	
-		
 		do Sys.wait(wait_time);
 		let last_time = last_time - wait_time;
 		do Main.drawBelow(location - (64*k));
@@ -160,13 +154,11 @@ function void jumpUp2(int location, int c){
 		let t1 = (-v0 + D) * 100 / (2 * (-20)); let t2 = (-v0 - D) * 100 / (2 * (-20)); 
 		let wait_time = t1 * 10 - last_time;
 
-		 do Output.printChar(" ");
+		do Output.printChar(" ");
 		do Output.printInt(wait_time);
 		do Output.printChar(" ");
 		do Output.printInt(t1 * 10);
 		do Output.printChar(" "); 
-		
-	
 		
 		do Sys.wait(wait_time);
 		let last_time = t1 * 10;
@@ -181,8 +173,7 @@ function void jumpUp2(int location, int c){
 	let last_time = 2000;
 	while(k > 0){
 		do Output.printChar(" ");
-		// * 100 pa * 10 jer treba *1000
-		// let t1 = (-v0 + D) * 100 / (2 * (20));  let t2 = (-v0 - D) * 100 / (2 * (20)); 
+
 		let c = -k + 1;
 		do Output.printChar(" ");
 		let D = Math.sqrt(v0*v0 - (4*(-20)*c));
@@ -194,8 +185,6 @@ function void jumpUp2(int location, int c){
 		do Output.printChar(" ");
 		do Output.printInt(t1 * 10);
 		do Output.printChar(" ");
-		
-	
 		
 		do Sys.wait(wait_time);
 		let last_time = last_time - wait_time;
