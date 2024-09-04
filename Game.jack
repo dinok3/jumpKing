@@ -1,0 +1,94 @@
+class Game{
+    //screen : 512 * 256
+	//start position: 32(po 16 u stupcu) * 255(redova) + 15(0..31)
+        
+    field int keyPressed;
+    field int duration; // hold
+    field boolean quit;
+    field int FPS;
+    field King king;
+    field int screenWidth;
+    field Array Platforms;
+
+    constructor Game new(){ 
+        //initialze objects
+        let quit = false;
+        let FPS = 60;
+        let duration = 0; 
+        let screenWidth = 32;
+        let king = King.new(31, 99);
+        let Platforms = Array.new(3);
+        //TODO: an array of levels
+        //this is object variable that stores base address of that object
+        return this;
+    }
+
+    method void handle_input(){
+        var boolean active;
+		let active = true;
+        let duration = 0;
+		while(active){
+			let keyPressed = Keyboard.keyPressed();
+
+            /*
+            Wait 10 seconds before next keyPressed() is recorded.
+            duration is max/100 for 1 second of holding space
+            */
+			while(keyPressed = 32){
+				do Sys.wait(10);
+				if(duration < 100){
+					let duration = duration + 1;
+				}
+				let keyPressed = Keyboard.keyPressed();
+
+                if(~(keyPressed = 32)){
+                    let active = false; 
+                }
+			}
+
+            if(keyPressed = 129){
+                let quit = true;
+                let active = false;
+            }
+
+            //space is released and no arrow is pressed - same as up arrow is pressed
+            if(~(keyPressed = 130) & ~(keyPressed = 132)){
+                let keyPressed = 131;
+            }else{
+                let active = false;
+            }
+		}
+        let duration = Utils.clamp(duration); 
+        return;
+    }
+
+    method void run(){
+        var int frameTime;
+        var Platform p;
+
+        let Platforms[0] = Platform.new(0,100, 100, 155); 
+        let Platforms[1] = Platform.new(411, 100, 100, 155); 
+        let Platforms[2] = Platform.new(411 ,100 - 69, 20, 30); 
+        
+        let p = Platforms[0];
+        do p.draw();
+        let p = Platforms[1];
+        do p.draw();
+        let p = Platforms[2];
+        do p.draw();
+        while(~quit){
+            do handle_input();
+            do king.jump(duration, keyPressed, screenWidth, FPS, Platforms);
+            do Sys.wait(50); 
+        }
+    
+        return;
+    }
+    
+    method void dispose(){
+        do Memory.deAlloc(king);
+        do Memory.deAlloc(this);
+        return;
+    }
+    
+}

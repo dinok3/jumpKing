@@ -1,0 +1,1743 @@
+class Graphics{
+    //left-right drawing
+    //static is shared among all objects
+
+    function void kingIdle(int x, int y) {
+        var int memAddress, location;
+        let location = y * 32 + x; 
+        let memAddress = 16384+location;
+        // column 0
+        do Memory.poke(memAddress -928, -2048);
+        do Memory.poke(memAddress -896, -1024);
+        do Memory.poke(memAddress -864, 7168);
+        do Memory.poke(memAddress -832, 7168);
+        do Memory.poke(memAddress -800, 7168);
+        do Memory.poke(memAddress -768, -9216);
+        do Memory.poke(memAddress -736, -25600);
+        do Memory.poke(memAddress -704, 7168);
+        do Memory.poke(memAddress -672, 7168);
+        do Memory.poke(memAddress -640, 7168);
+        do Memory.poke(memAddress -608, 8128);
+        do Memory.poke(memAddress -576, 15868);
+        do Memory.poke(memAddress -544, -1538);
+        do Memory.poke(memAddress -512, -6145);
+        do Memory.poke(memAddress -480, 2047);
+        do Memory.poke(memAddress -448, -6145);
+        do Memory.poke(memAddress -416, -6145);
+        do Memory.poke(memAddress -384, -7170);
+        do Memory.poke(memAddress -352, -16144);
+        do Memory.poke(memAddress -320, -24608);
+        do Memory.poke(memAddress -288, 16368);
+        do Memory.poke(memAddress -256, 32752);
+        do Memory.poke(memAddress -224, 32752);
+        do Memory.poke(memAddress -192, 32736);
+        do Memory.poke(memAddress -160, 32752);
+        do Memory.poke(memAddress -128, 16368);
+        do Memory.poke(memAddress -96, 8184);
+        do Memory.poke(memAddress -64, 16376);
+        do Memory.poke(memAddress -32, 32760);
+        do Memory.poke(memAddress, 32752);
+        // column 1
+        if(x = 31){
+            let memAddress = memAddress - 32;
+        }
+        do Memory.poke(memAddress -927, 31);
+        do Memory.poke(memAddress -895, 63);
+        do Memory.poke(memAddress -863, 48);
+        do Memory.poke(memAddress -831, 48);
+        do Memory.poke(memAddress -799, 48);
+        do Memory.poke(memAddress -767, 55);
+        do Memory.poke(memAddress -735, 55);
+        do Memory.poke(memAddress -703, 50);
+        do Memory.poke(memAddress -671, 50);
+        do Memory.poke(memAddress -639, 50);
+        do Memory.poke(memAddress -607, 1008);
+        do Memory.poke(memAddress -575, 8176);
+        do Memory.poke(memAddress -543, 8159);
+        do Memory.poke(memAddress -511, 8143);
+        do Memory.poke(memAddress -479, 8128);
+        do Memory.poke(memAddress -447, 8135);
+        do Memory.poke(memAddress -415, 8071);
+        do Memory.poke(memAddress -383, 391);
+        do Memory.poke(memAddress -351, 507);
+        do Memory.poke(memAddress -319, 1021);
+        do Memory.poke(memAddress -287, 2046);
+        do Memory.poke(memAddress -255, 4094);
+        do Memory.poke(memAddress -223, 4094);
+        do Memory.poke(memAddress -191, 4092);
+        do Memory.poke(memAddress -159, 4094);
+        do Memory.poke(memAddress -127, 2046);
+        do Memory.poke(memAddress -95, 1023);
+        do Memory.poke(memAddress -63, 2047);
+        do Memory.poke(memAddress -31, 4095);
+        do Memory.poke(memAddress +1, 4094);
+        return;
+    }
+
+    function void kingRight1(int x, int y) {
+        var int memAddress, location;
+        let location = y * 32 + x;
+        let memAddress = 16384+location;
+        // column 0
+        do Memory.poke(memAddress -928, -8192);
+        do Memory.poke(memAddress -896, -4096);
+        do Memory.poke(memAddress -864, 28672);
+        do Memory.poke(memAddress -832, 28672);
+        do Memory.poke(memAddress -800, 28672);
+        do Memory.poke(memAddress -768, 28672);
+        do Memory.poke(memAddress -736, 28672);
+        do Memory.poke(memAddress -704, 28672);
+        do Memory.poke(memAddress -672, 28672);
+        do Memory.poke(memAddress -640, 28672);
+        do Memory.poke(memAddress -608, 32512);
+        do Memory.poke(memAddress -576, -2064);
+        do Memory.poke(memAddress -544, -6152);
+        do Memory.poke(memAddress -512, -24580);
+        do Memory.poke(memAddress -480, 8188);
+        do Memory.poke(memAddress -448, -24580);
+        do Memory.poke(memAddress -416, -24580);
+        do Memory.poke(memAddress -384, -28680);
+        do Memory.poke(memAddress -352, 960);
+        do Memory.poke(memAddress -320, 32640);
+        do Memory.poke(memAddress -288, -64);
+        do Memory.poke(memAddress -256, -64);
+        do Memory.poke(memAddress -224, -64);
+        do Memory.poke(memAddress -192, -128);
+        do Memory.poke(memAddress -160, -64);
+        do Memory.poke(memAddress -128, -64);
+        do Memory.poke(memAddress -96, 32736);
+        do Memory.poke(memAddress -64, -32);
+        do Memory.poke(memAddress -32, -32);
+        do Memory.poke(memAddress, -64);
+        // column 1
+        if(x = 31){
+            let memAddress = memAddress - 32;
+        }
+        do Memory.poke(memAddress -927, 127);
+        do Memory.poke(memAddress -895, 255);
+        do Memory.poke(memAddress -863, 192);
+        do Memory.poke(memAddress -831, 192);
+        do Memory.poke(memAddress -799, 192);
+        do Memory.poke(memAddress -767, 223);
+        do Memory.poke(memAddress -735, 222);
+        do Memory.poke(memAddress -703, 200);
+        do Memory.poke(memAddress -671, 200);
+        do Memory.poke(memAddress -639, 200);
+        do Memory.poke(memAddress -607, 4032);
+        do Memory.poke(memAddress -575, 32704);
+        do Memory.poke(memAddress -543, 32639);
+        do Memory.poke(memAddress -511, 32575);
+        do Memory.poke(memAddress -479, 32512);
+        do Memory.poke(memAddress -447, 32543);
+        do Memory.poke(memAddress -415, 32287);
+        do Memory.poke(memAddress -383, 1567);
+        do Memory.poke(memAddress -351, 2031);
+        do Memory.poke(memAddress -319, 4086);
+        do Memory.poke(memAddress -287, 8184);
+        do Memory.poke(memAddress -255, 16377);
+        do Memory.poke(memAddress -223, 16377);
+        do Memory.poke(memAddress -191, 16369);
+        do Memory.poke(memAddress -159, 16377);
+        do Memory.poke(memAddress -127, 8184);
+        do Memory.poke(memAddress -95, 4092);
+        do Memory.poke(memAddress -63, 8188);
+        do Memory.poke(memAddress -31, 16381);
+        do Memory.poke(memAddress +1, 16377);
+        return;
+    }
+
+    function void kingRight2(int x, int y) {
+        var int memAddress, location; 
+        let location = y * 32 + x;
+        let memAddress = 16384+location;
+        // column 0
+        do Memory.poke(memAddress -928, ~32767);
+        do Memory.poke(memAddress -896, -16384);
+        do Memory.poke(memAddress -864, -16384);
+        do Memory.poke(memAddress -832, -16384);
+        do Memory.poke(memAddress -800, -16384);
+        do Memory.poke(memAddress -768, -16384);
+        do Memory.poke(memAddress -736, -16384);
+        do Memory.poke(memAddress -704, -16384);
+        do Memory.poke(memAddress -672, -16384);
+        do Memory.poke(memAddress -640, -16384);
+        do Memory.poke(memAddress -608, -1024);
+        do Memory.poke(memAddress -576, -8256);
+        do Memory.poke(memAddress -544, -24608);
+        do Memory.poke(memAddress -512, 32752);
+        do Memory.poke(memAddress -480, 32752);
+        do Memory.poke(memAddress -448, 32752);
+        do Memory.poke(memAddress -416, 32752);
+        do Memory.poke(memAddress -384, 16352);
+        do Memory.poke(memAddress -352, 3840);
+        do Memory.poke(memAddress -320, -512);
+        do Memory.poke(memAddress -288, -256);
+        do Memory.poke(memAddress -256, -256);
+        do Memory.poke(memAddress -224, -256);
+        do Memory.poke(memAddress -192, -512);
+        do Memory.poke(memAddress -160, -256);
+        do Memory.poke(memAddress -128, -256);
+        do Memory.poke(memAddress -96, -128);
+        do Memory.poke(memAddress -64, -128);
+        do Memory.poke(memAddress -32, -128);
+        do Memory.poke(memAddress, -256);
+        if(x = 31){
+            let memAddress = memAddress - 32;
+        }
+        // column 1
+        do Memory.poke(memAddress -927, 511);
+        do Memory.poke(memAddress -895, 1023);
+        do Memory.poke(memAddress -863, 769);
+        do Memory.poke(memAddress -831, 769);
+        do Memory.poke(memAddress -799, 769);
+        do Memory.poke(memAddress -767, 893);
+        do Memory.poke(memAddress -735, 889);
+        do Memory.poke(memAddress -703, 801);
+        do Memory.poke(memAddress -671, 801);
+        do Memory.poke(memAddress -639, 801);
+        do Memory.poke(memAddress -607, 16129);
+        do Memory.poke(memAddress -575, -253);
+        do Memory.poke(memAddress -543, -513);
+        do Memory.poke(memAddress -511, -770);
+        do Memory.poke(memAddress -479, -1024);
+        do Memory.poke(memAddress -447, -898);
+        do Memory.poke(memAddress -415, -1922);
+        do Memory.poke(memAddress -383, 6270);
+        do Memory.poke(memAddress -351, 8124);
+        do Memory.poke(memAddress -319, 16345);
+        do Memory.poke(memAddress -287, 32739);
+        do Memory.poke(memAddress -255, -25);
+        do Memory.poke(memAddress -223, -25);
+        do Memory.poke(memAddress -191, -57);
+        do Memory.poke(memAddress -159, -25);
+        do Memory.poke(memAddress -127, 32739);
+        do Memory.poke(memAddress -95, 16369);
+        do Memory.poke(memAddress -63, 32755);
+        do Memory.poke(memAddress -31, -9);
+        do Memory.poke(memAddress +1, -25);
+        // column 2
+        if(x = 30){
+            let memAddress = memAddress - 32;
+        }
+        do Memory.poke(memAddress -926, 0);
+        do Memory.poke(memAddress -894, 0);
+        do Memory.poke(memAddress -862, 0);
+        do Memory.poke(memAddress -830, 0);
+        do Memory.poke(memAddress -798, 0);
+        do Memory.poke(memAddress -766, 0);
+        do Memory.poke(memAddress -734, 0);
+        do Memory.poke(memAddress -702, 0);
+        do Memory.poke(memAddress -670, 0);
+        do Memory.poke(memAddress -638, 0);
+        do Memory.poke(memAddress -606, 0);
+        do Memory.poke(memAddress -574, 1);
+        do Memory.poke(memAddress -542, 1);
+        do Memory.poke(memAddress -510, 1);
+        do Memory.poke(memAddress -478, 1);
+        do Memory.poke(memAddress -446, 1);
+        do Memory.poke(memAddress -414, 1);
+        do Memory.poke(memAddress -382, 0);
+        do Memory.poke(memAddress -350, 0);
+        do Memory.poke(memAddress -318, 0);
+        do Memory.poke(memAddress -286, 0);
+        do Memory.poke(memAddress -254, 0);
+        do Memory.poke(memAddress -222, 0);
+        do Memory.poke(memAddress -190, 0);
+        do Memory.poke(memAddress -158, 0);
+        do Memory.poke(memAddress -126, 0);
+        do Memory.poke(memAddress -94, 0);
+        do Memory.poke(memAddress -62, 0);
+        do Memory.poke(memAddress -30, 0);
+        do Memory.poke(memAddress +2, 0);
+        return;
+    }
+
+    function void kingRight3(int x, int y) {
+        var int memAddress, location;
+        let location = y * 32 + x; 
+        let memAddress = 16384+location;
+        // column 0
+        do Memory.poke(memAddress -928, 0);
+        do Memory.poke(memAddress -896, 0);
+        do Memory.poke(memAddress -864, 0);
+        do Memory.poke(memAddress -832, 0);
+        do Memory.poke(memAddress -800, 0);
+        do Memory.poke(memAddress -768, 0);
+        do Memory.poke(memAddress -736, 0);
+        do Memory.poke(memAddress -704, 0);
+        do Memory.poke(memAddress -672, 0);
+        do Memory.poke(memAddress -640, 0);
+        do Memory.poke(memAddress -608, -4096);
+        do Memory.poke(memAddress -576, 32512);
+        do Memory.poke(memAddress -544, 32640);
+        do Memory.poke(memAddress -512, -64);
+        do Memory.poke(memAddress -480, -64);
+        do Memory.poke(memAddress -448, -64);
+        do Memory.poke(memAddress -416, -64);
+        do Memory.poke(memAddress -384, -128);
+        do Memory.poke(memAddress -352, 15360);
+        do Memory.poke(memAddress -320, -2048);
+        do Memory.poke(memAddress -288, -1024);
+        do Memory.poke(memAddress -256, -1024);
+        do Memory.poke(memAddress -224, -1024);
+        do Memory.poke(memAddress -192, -2048);
+        do Memory.poke(memAddress -160, -1024);
+        do Memory.poke(memAddress -128, -1024);
+        do Memory.poke(memAddress -96, -512);
+        do Memory.poke(memAddress -64, -512);
+        do Memory.poke(memAddress -32, -512);
+        do Memory.poke(memAddress, -1024);
+        // column 1
+        if(x = 31){
+            let memAddress = memAddress - 32;
+        }
+        do Memory.poke(memAddress -927, 2046);
+        do Memory.poke(memAddress -895, 4095);
+        do Memory.poke(memAddress -863, 3079);
+        do Memory.poke(memAddress -831, 3079);
+        do Memory.poke(memAddress -799, 3079);
+        do Memory.poke(memAddress -767, 3575);
+        do Memory.poke(memAddress -735, 3559);
+        do Memory.poke(memAddress -703, 3207);
+        do Memory.poke(memAddress -671, 3207);
+        do Memory.poke(memAddress -639, 3207);
+        do Memory.poke(memAddress -607, -1017);
+        do Memory.poke(memAddress -575, -1009);
+        do Memory.poke(memAddress -543, -2050);
+        do Memory.poke(memAddress -511, -3079);
+        do Memory.poke(memAddress -479, -4095);
+        do Memory.poke(memAddress -447, -3591);
+        do Memory.poke(memAddress -415, -7687);
+        do Memory.poke(memAddress -383, 25080);
+        do Memory.poke(memAddress -351, 32496);
+        do Memory.poke(memAddress -319, -153);
+        do Memory.poke(memAddress -287, -113);
+        do Memory.poke(memAddress -255, -97);
+        do Memory.poke(memAddress -223, -97);
+        do Memory.poke(memAddress -191, -225);
+        do Memory.poke(memAddress -159, -97);
+        do Memory.poke(memAddress -127, -113);
+        do Memory.poke(memAddress -95, -57);
+        do Memory.poke(memAddress -63, -49);
+        do Memory.poke(memAddress -31, -33);
+        do Memory.poke(memAddress +1, -97);
+        // column 2
+        if(x = 30){
+            let memAddress = memAddress - 32;
+        }
+        do Memory.poke(memAddress -926, 0);
+        do Memory.poke(memAddress -894, 0);
+        do Memory.poke(memAddress -862, 0);
+        do Memory.poke(memAddress -830, 0);
+        do Memory.poke(memAddress -798, 0);
+        do Memory.poke(memAddress -766, 0);
+        do Memory.poke(memAddress -734, 0);
+        do Memory.poke(memAddress -702, 0);
+        do Memory.poke(memAddress -670, 0);
+        do Memory.poke(memAddress -638, 0);
+        do Memory.poke(memAddress -606, 0);
+        do Memory.poke(memAddress -574, 7);
+        do Memory.poke(memAddress -542, 7);
+        do Memory.poke(memAddress -510, 7);
+        do Memory.poke(memAddress -478, 7);
+        do Memory.poke(memAddress -446, 7);
+        do Memory.poke(memAddress -414, 7);
+        do Memory.poke(memAddress -382, 0);
+        do Memory.poke(memAddress -350, 0);
+        do Memory.poke(memAddress -318, 0);
+        do Memory.poke(memAddress -286, 1);
+        do Memory.poke(memAddress -254, 3);
+        do Memory.poke(memAddress -222, 3);
+        do Memory.poke(memAddress -190, 3);
+        do Memory.poke(memAddress -158, 3);
+        do Memory.poke(memAddress -126, 1);
+        do Memory.poke(memAddress -94, 0);
+        do Memory.poke(memAddress -62, 1);
+        do Memory.poke(memAddress -30, 3);
+        do Memory.poke(memAddress +2, 3);
+        return;
+        }
+
+
+    function void kingRight4(int x, int y) {
+        var int memAddress, location;
+        let location = y * 32 + x; 
+        let memAddress = 16384+location;
+        // column 0
+        do Memory.poke(memAddress -928, 0);
+        do Memory.poke(memAddress -896, 0);
+        do Memory.poke(memAddress -864, 0);
+        do Memory.poke(memAddress -832, 0);
+        do Memory.poke(memAddress -800, 0);
+        do Memory.poke(memAddress -768, 0);
+        do Memory.poke(memAddress -736, 0);
+        do Memory.poke(memAddress -704, 0);
+        do Memory.poke(memAddress -672, 0);
+        do Memory.poke(memAddress -640, 0);
+        do Memory.poke(memAddress -608, -16384);
+        do Memory.poke(memAddress -576, -1024);
+        do Memory.poke(memAddress -544, -512);
+        do Memory.poke(memAddress -512, -256);
+        do Memory.poke(memAddress -480, -256);
+        do Memory.poke(memAddress -448, -256);
+        do Memory.poke(memAddress -416, -256);
+        do Memory.poke(memAddress -384, -512);
+        do Memory.poke(memAddress -352, -4096);
+        do Memory.poke(memAddress -320, -8192);
+        do Memory.poke(memAddress -288, -4096);
+        do Memory.poke(memAddress -256, -4096);
+        do Memory.poke(memAddress -224, -4096);
+        do Memory.poke(memAddress -192, -8192);
+        do Memory.poke(memAddress -160, -4096);
+        do Memory.poke(memAddress -128, -4096);
+        do Memory.poke(memAddress -96, -2048);
+        do Memory.poke(memAddress -64, -2048);
+        do Memory.poke(memAddress -32, -2048);
+        do Memory.poke(memAddress, -4096);
+        // column 1
+        if(x = 31){
+            let memAddress = memAddress - 32;
+        }
+        do Memory.poke(memAddress -927, 8184);
+        do Memory.poke(memAddress -895, 16380);
+        do Memory.poke(memAddress -863, 12316);
+        do Memory.poke(memAddress -831, 12316);
+        do Memory.poke(memAddress -799, 12316);
+        do Memory.poke(memAddress -767, 14300);
+        do Memory.poke(memAddress -735, 14236);
+        do Memory.poke(memAddress -703, 12828);
+        do Memory.poke(memAddress -671, 12828);
+        do Memory.poke(memAddress -639, 12828);
+        do Memory.poke(memAddress -607, -4065);
+        do Memory.poke(memAddress -575, -4035);
+        do Memory.poke(memAddress -543, -8199);
+        do Memory.poke(memAddress -511, -12313);
+        do Memory.poke(memAddress -479, -16377);
+        do Memory.poke(memAddress -447, -14361);
+        do Memory.poke(memAddress -415, -30745);
+        do Memory.poke(memAddress -383, -30749);
+        do Memory.poke(memAddress -351, -1088);
+        do Memory.poke(memAddress -319, -609);
+        do Memory.poke(memAddress -287, -449);
+        do Memory.poke(memAddress -255, -385);
+        do Memory.poke(memAddress -223, -385);
+        do Memory.poke(memAddress -191, -897);
+        do Memory.poke(memAddress -159, -385);
+        do Memory.poke(memAddress -127, -449);
+        do Memory.poke(memAddress -95, -225);
+        do Memory.poke(memAddress -63, -193);
+        do Memory.poke(memAddress -31, -129);
+        do Memory.poke(memAddress +1, -385);
+        // column 2
+        if(x = 30){
+            let memAddress = memAddress - 32;
+        }
+        do Memory.poke(memAddress -926, 0);
+        do Memory.poke(memAddress -894, 0);
+        do Memory.poke(memAddress -862, 0);
+        do Memory.poke(memAddress -830, 0);
+        do Memory.poke(memAddress -798, 0);
+        do Memory.poke(memAddress -766, 0);
+        do Memory.poke(memAddress -734, 0);
+        do Memory.poke(memAddress -702, 0);
+        do Memory.poke(memAddress -670, 0);
+        do Memory.poke(memAddress -638, 0);
+        do Memory.poke(memAddress -606, 3);
+        do Memory.poke(memAddress -574, 31);
+        do Memory.poke(memAddress -542, 31);
+        do Memory.poke(memAddress -510, 31);
+        do Memory.poke(memAddress -478, 31);
+        do Memory.poke(memAddress -446, 31);
+        do Memory.poke(memAddress -414, 31);
+        do Memory.poke(memAddress -382, 1);
+        do Memory.poke(memAddress -350, 1);
+        do Memory.poke(memAddress -318, 3);
+        do Memory.poke(memAddress -286, 7);
+        do Memory.poke(memAddress -254, 15);
+        do Memory.poke(memAddress -222, 15);
+        do Memory.poke(memAddress -190, 15);
+        do Memory.poke(memAddress -158, 15);
+        do Memory.poke(memAddress -126, 7);
+        do Memory.poke(memAddress -94, 3);
+        do Memory.poke(memAddress -62, 7);
+        do Memory.poke(memAddress -30, 15);
+        do Memory.poke(memAddress +2, 15);
+        return;
+    }
+
+    function void kingRight5(int x, int y) {
+        var int memAddress, location;
+        let location = y *32 + x;
+        let memAddress = 16384+location;
+        // column 0
+        do Memory.poke(memAddress -928, 0);
+        do Memory.poke(memAddress -896, 0);
+        do Memory.poke(memAddress -864, 0);
+        do Memory.poke(memAddress -832, 0);
+        do Memory.poke(memAddress -800, 0);
+        do Memory.poke(memAddress -768, 0);
+        do Memory.poke(memAddress -736, 0);
+        do Memory.poke(memAddress -704, 0);
+        do Memory.poke(memAddress -672, 0);
+        do Memory.poke(memAddress -640, 0);
+        do Memory.poke(memAddress -608, 0);
+        do Memory.poke(memAddress -576, -4096);
+        do Memory.poke(memAddress -544, -2048);
+        do Memory.poke(memAddress -512, -1024);
+        do Memory.poke(memAddress -480, -1024);
+        do Memory.poke(memAddress -448, -1024);
+        do Memory.poke(memAddress -416, -1024);
+        do Memory.poke(memAddress -384, -2048);
+        do Memory.poke(memAddress -352, -16384);
+        do Memory.poke(memAddress -320, ~32767);
+        do Memory.poke(memAddress -288, -16384);
+        do Memory.poke(memAddress -256, -16384);
+        do Memory.poke(memAddress -224, -16384);
+        do Memory.poke(memAddress -192, ~32767);
+        do Memory.poke(memAddress -160, -16384);
+        do Memory.poke(memAddress -128, -16384);
+        do Memory.poke(memAddress -96, -8192);
+        do Memory.poke(memAddress -64, -8192);
+        do Memory.poke(memAddress -32, -8192);
+        do Memory.poke(memAddress, -16384);
+        // column 1
+        if(x = 31)
+        {
+            let memAddress = memAddress  - 32;
+        }
+        do Memory.poke(memAddress -927, 32736);
+        do Memory.poke(memAddress -895, -16);
+        do Memory.poke(memAddress -863, -16272);
+        do Memory.poke(memAddress -831, -16272);
+        do Memory.poke(memAddress -799, -16272);
+        do Memory.poke(memAddress -767, -8336);
+        do Memory.poke(memAddress -735, -8592);
+        do Memory.poke(memAddress -703, -14224);
+        do Memory.poke(memAddress -671, -14224);
+        do Memory.poke(memAddress -639, -14224);
+        do Memory.poke(memAddress -607, -16257);
+        do Memory.poke(memAddress -575, -16137);
+        do Memory.poke(memAddress -543, 32743);
+        do Memory.poke(memAddress -511, 16287);
+        do Memory.poke(memAddress -479, 31);
+        do Memory.poke(memAddress -447, 8095);
+        do Memory.poke(memAddress -415, 8095);
+        do Memory.poke(memAddress -383, 8079);
+        do Memory.poke(memAddress -351, -4349);
+        do Memory.poke(memAddress -319, -2433);
+        do Memory.poke(memAddress -287, -1793);
+        do Memory.poke(memAddress -255, -1537);
+        do Memory.poke(memAddress -223, -1537);
+        do Memory.poke(memAddress -191, -3585);
+        do Memory.poke(memAddress -159, -1537);
+        do Memory.poke(memAddress -127, -1793);
+        do Memory.poke(memAddress -95, -897);
+        do Memory.poke(memAddress -63, -769);
+        do Memory.poke(memAddress -31, -513);
+        do Memory.poke(memAddress +1, -1537);
+        // column 2
+        if(x = 30){
+            let memAddress = memAddress - 32;
+        }
+        do Memory.poke(memAddress -926, 0);
+        do Memory.poke(memAddress -894, 0);
+        do Memory.poke(memAddress -862, 0);
+        do Memory.poke(memAddress -830, 0);
+        do Memory.poke(memAddress -798, 0);
+        do Memory.poke(memAddress -766, 0);
+        do Memory.poke(memAddress -734, 0);
+        do Memory.poke(memAddress -702, 0);
+        do Memory.poke(memAddress -670, 0);
+        do Memory.poke(memAddress -638, 0);
+        do Memory.poke(memAddress -606, 15);
+        do Memory.poke(memAddress -574, 127);
+        do Memory.poke(memAddress -542, 127);
+        do Memory.poke(memAddress -510, 127);
+        do Memory.poke(memAddress -478, 127);
+        do Memory.poke(memAddress -446, 127);
+        do Memory.poke(memAddress -414, 126);
+        do Memory.poke(memAddress -382, 6);
+        do Memory.poke(memAddress -350, 7);
+        do Memory.poke(memAddress -318, 15);
+        do Memory.poke(memAddress -286, 31);
+        do Memory.poke(memAddress -254, 63);
+        do Memory.poke(memAddress -222, 63);
+        do Memory.poke(memAddress -190, 63);
+        do Memory.poke(memAddress -158, 63);
+        do Memory.poke(memAddress -126, 31);
+        do Memory.poke(memAddress -94, 15);
+        do Memory.poke(memAddress -62, 31);
+        do Memory.poke(memAddress -30, 63);
+        do Memory.poke(memAddress +2, 63);
+        return;
+    }
+
+    function void kingRight6(int x,int y) {
+        var int memAddress, location;
+        let location = y * 32 + x; 
+        let memAddress = 16384+location;
+        // column 0
+        do Memory.poke(memAddress -928, 0);
+        do Memory.poke(memAddress -896, 0);
+        do Memory.poke(memAddress -864, 0);
+        do Memory.poke(memAddress -832, 0);
+        do Memory.poke(memAddress -800, 0);
+        do Memory.poke(memAddress -768, 0);
+        do Memory.poke(memAddress -736, 0);
+        do Memory.poke(memAddress -704, 0);
+        do Memory.poke(memAddress -672, 0);
+        do Memory.poke(memAddress -640, 0);
+        do Memory.poke(memAddress -608, 0);
+        do Memory.poke(memAddress -576, -16384);
+        do Memory.poke(memAddress -544, -8192);
+        do Memory.poke(memAddress -512, -4096);
+        do Memory.poke(memAddress -480, -4096);
+        do Memory.poke(memAddress -448, -4096);
+        do Memory.poke(memAddress -416, -4096);
+        do Memory.poke(memAddress -384, -8192);
+        do Memory.poke(memAddress -352, 0);
+        do Memory.poke(memAddress -320, 0);
+        do Memory.poke(memAddress -288, 0);
+        do Memory.poke(memAddress -256, 0);
+        do Memory.poke(memAddress -224, 0);
+        do Memory.poke(memAddress -192, 0);
+        do Memory.poke(memAddress -160, 0);
+        do Memory.poke(memAddress -128, 0);
+        do Memory.poke(memAddress -96, ~32767);
+        do Memory.poke(memAddress -64, ~32767);
+        do Memory.poke(memAddress -32, ~32767);
+        do Memory.poke(memAddress, 0);
+        // column 1
+        if(x = 31){
+            let memAddress = memAddress - 32;
+        }
+        do Memory.poke(memAddress -927, -128);
+        do Memory.poke(memAddress -895, -64);
+        do Memory.poke(memAddress -863, 448);
+        do Memory.poke(memAddress -831, 448);
+        do Memory.poke(memAddress -799, 448);
+        do Memory.poke(memAddress -767, 32192);
+        do Memory.poke(memAddress -735, 31168);
+        do Memory.poke(memAddress -703, 8640);
+        do Memory.poke(memAddress -671, 8640);
+        do Memory.poke(memAddress -639, 8640);
+        do Memory.poke(memAddress -607, 508);
+        do Memory.poke(memAddress -575, 991);
+        do Memory.poke(memAddress -543, -97);
+        do Memory.poke(memAddress -511, -385);
+        do Memory.poke(memAddress -479, 127);
+        do Memory.poke(memAddress -447, 32383);
+        do Memory.poke(memAddress -415, 32383);
+        do Memory.poke(memAddress -383, 32319);
+        do Memory.poke(memAddress -351, -17393);
+        do Memory.poke(memAddress -319, -9730);
+        do Memory.poke(memAddress -287, -7169);
+        do Memory.poke(memAddress -255, -6145);
+        do Memory.poke(memAddress -223, -6145);
+        do Memory.poke(memAddress -191, -14338);
+        do Memory.poke(memAddress -159, -6145);
+        do Memory.poke(memAddress -127, -7169);
+        do Memory.poke(memAddress -95, -3585);
+        do Memory.poke(memAddress -63, -3073);
+        do Memory.poke(memAddress -31, -2049);
+        do Memory.poke(memAddress +1, -6145);
+        // column 2
+        if(x = 30){
+            let memAddress = memAddress - 32;
+        }
+        do Memory.poke(memAddress -926, 1);
+        do Memory.poke(memAddress -894, 3);
+        do Memory.poke(memAddress -862, 3);
+        do Memory.poke(memAddress -830, 3);
+        do Memory.poke(memAddress -798, 3);
+        do Memory.poke(memAddress -766, 3);
+        do Memory.poke(memAddress -734, 3);
+        do Memory.poke(memAddress -702, 3);
+        do Memory.poke(memAddress -670, 3);
+        do Memory.poke(memAddress -638, 3);
+        do Memory.poke(memAddress -606, 63);
+        do Memory.poke(memAddress -574, 511);
+        do Memory.poke(memAddress -542, 509);
+        do Memory.poke(memAddress -510, 508);
+        do Memory.poke(memAddress -478, 508);
+        do Memory.poke(memAddress -446, 508);
+        do Memory.poke(memAddress -414, 504);
+        do Memory.poke(memAddress -382, 24);
+        do Memory.poke(memAddress -350, 31);
+        do Memory.poke(memAddress -318, 63);
+        do Memory.poke(memAddress -286, 127);
+        do Memory.poke(memAddress -254, 255);
+        do Memory.poke(memAddress -222, 255);
+        do Memory.poke(memAddress -190, 255);
+        do Memory.poke(memAddress -158, 255);
+        do Memory.poke(memAddress -126, 127);
+        do Memory.poke(memAddress -94, 63);
+        do Memory.poke(memAddress -62, 127);
+        do Memory.poke(memAddress -30, 255);
+        do Memory.poke(memAddress +2, 255);
+        return;
+    }
+
+    function void kingRight7(int x, int y) {
+        var int memAddress, location; 
+        let location = y * 32 + x;
+        let memAddress = 16384+location;
+        // column 0
+        do Memory.poke(memAddress -928, 0);
+        do Memory.poke(memAddress -896, 0);
+        do Memory.poke(memAddress -864, 0);
+        do Memory.poke(memAddress -832, 0);
+        do Memory.poke(memAddress -800, 0);
+        do Memory.poke(memAddress -768, 0);
+        do Memory.poke(memAddress -736, 0);
+        do Memory.poke(memAddress -704, 0);
+        do Memory.poke(memAddress -672, 0);
+        do Memory.poke(memAddress -640, 0);
+        do Memory.poke(memAddress -608, 0);
+        do Memory.poke(memAddress -576, 0);
+        do Memory.poke(memAddress -544, ~32767);
+        do Memory.poke(memAddress -512, -16384);
+        do Memory.poke(memAddress -480, -16384);
+        do Memory.poke(memAddress -448, -16384);
+        do Memory.poke(memAddress -416, -16384);
+        do Memory.poke(memAddress -384, ~32767);
+        do Memory.poke(memAddress -352, 0);
+        do Memory.poke(memAddress -320, 0);
+        do Memory.poke(memAddress -288, 0);
+        do Memory.poke(memAddress -256, 0);
+        do Memory.poke(memAddress -224, 0);
+        do Memory.poke(memAddress -192, 0);
+        do Memory.poke(memAddress -160, 0);
+        do Memory.poke(memAddress -128, 0);
+        do Memory.poke(memAddress -96, 0);
+        do Memory.poke(memAddress -64, 0);
+        do Memory.poke(memAddress -32, 0);
+        do Memory.poke(memAddress, 0);
+        // column 1
+        if(x = 31)
+        {
+            let memAddress = memAddress - 32;
+        }
+        do Memory.poke(memAddress -927, -512);
+        do Memory.poke(memAddress -895, -256);
+        do Memory.poke(memAddress -863, 1792);
+        do Memory.poke(memAddress -831, 1792);
+        do Memory.poke(memAddress -799, 1792);
+        do Memory.poke(memAddress -767, -2304);
+        do Memory.poke(memAddress -735, -6400);
+        do Memory.poke(memAddress -703, -30976);
+        do Memory.poke(memAddress -671, -30976);
+        do Memory.poke(memAddress -639, -30976);
+        do Memory.poke(memAddress -607, 2032);
+        do Memory.poke(memAddress -575, 3967);
+        do Memory.poke(memAddress -543, -385);
+        do Memory.poke(memAddress -511, -1537);
+        do Memory.poke(memAddress -479, 511);
+        do Memory.poke(memAddress -447, -1537);
+        do Memory.poke(memAddress -415, -1537);
+        do Memory.poke(memAddress -383, -1793);
+        do Memory.poke(memAddress -351, -4036);
+        do Memory.poke(memAddress -319, 26616);
+        do Memory.poke(memAddress -287, -28676);
+        do Memory.poke(memAddress -255, -24580);
+        do Memory.poke(memAddress -223, -24580);
+        do Memory.poke(memAddress -191, 8184);
+        do Memory.poke(memAddress -159, -24580);
+        do Memory.poke(memAddress -127, -28676);
+        do Memory.poke(memAddress -95, -14338);
+        do Memory.poke(memAddress -63, -12290);
+        do Memory.poke(memAddress -31, -8194);
+        do Memory.poke(memAddress +1, -24580);
+        // column 2
+        if(x = 30){
+            let memAddress = memAddress - 32;
+        }
+        do Memory.poke(memAddress -926, 7);
+        do Memory.poke(memAddress -894, 15);
+        do Memory.poke(memAddress -862, 12);
+        do Memory.poke(memAddress -830, 12);
+        do Memory.poke(memAddress -798, 12);
+        do Memory.poke(memAddress -766, 13);
+        do Memory.poke(memAddress -734, 13);
+        do Memory.poke(memAddress -702, 12);
+        do Memory.poke(memAddress -670, 12);
+        do Memory.poke(memAddress -638, 12);
+        do Memory.poke(memAddress -606, 252);
+        do Memory.poke(memAddress -574, 2044);
+        do Memory.poke(memAddress -542, 2039);
+        do Memory.poke(memAddress -510, 2035);
+        do Memory.poke(memAddress -478, 2032);
+        do Memory.poke(memAddress -446, 2033);
+        do Memory.poke(memAddress -414, 2017);
+        do Memory.poke(memAddress -382, 97);
+        do Memory.poke(memAddress -350, 126);
+        do Memory.poke(memAddress -318, 255);
+        do Memory.poke(memAddress -286, 511);
+        do Memory.poke(memAddress -254, 1023);
+        do Memory.poke(memAddress -222, 1023);
+        do Memory.poke(memAddress -190, 1023);
+        do Memory.poke(memAddress -158, 1023);
+        do Memory.poke(memAddress -126, 511);
+        do Memory.poke(memAddress -94, 255);
+        do Memory.poke(memAddress -62, 511);
+        do Memory.poke(memAddress -30, 1023);
+        do Memory.poke(memAddress +2, 1023);
+        return;
+    }
+
+    function void kingRight8(int x, int y) {
+        var int memAddress, location;
+        let location = y * 32 + x; 
+        let memAddress = 16384+location;
+        // column 0
+        do Memory.poke(memAddress -928, 0);
+        do Memory.poke(memAddress -896, 0);
+        do Memory.poke(memAddress -864, 0);
+        do Memory.poke(memAddress -832, 0);
+        do Memory.poke(memAddress -800, 0);
+        do Memory.poke(memAddress -768, 0);
+        do Memory.poke(memAddress -736, 0);
+        do Memory.poke(memAddress -704, 0);
+        do Memory.poke(memAddress -672, 0);
+        do Memory.poke(memAddress -640, 0);
+        do Memory.poke(memAddress -608, 0);
+        do Memory.poke(memAddress -576, 0);
+        do Memory.poke(memAddress -544, 0);
+        do Memory.poke(memAddress -512, 0);
+        do Memory.poke(memAddress -480, 0);
+        do Memory.poke(memAddress -448, 0);
+        do Memory.poke(memAddress -416, 0);
+        do Memory.poke(memAddress -384, 0);
+        do Memory.poke(memAddress -352, 0);
+        do Memory.poke(memAddress -320, 0);
+        do Memory.poke(memAddress -288, 0);
+        do Memory.poke(memAddress -256, 0);
+        do Memory.poke(memAddress -224, 0);
+        do Memory.poke(memAddress -192, 0);
+        do Memory.poke(memAddress -160, 0);
+        do Memory.poke(memAddress -128, 0);
+        do Memory.poke(memAddress -96, 0);
+        do Memory.poke(memAddress -64, 0);
+        do Memory.poke(memAddress -32, 0);
+        do Memory.poke(memAddress, 0);
+        // column 1
+        if(x =31){
+            let memAddress = memAddress - 32;
+        }
+        do Memory.poke(memAddress -927, -2048);
+        do Memory.poke(memAddress -895, -1024);
+        do Memory.poke(memAddress -863, 7168);
+        do Memory.poke(memAddress -831, 7168);
+        do Memory.poke(memAddress -799, 7168);
+        do Memory.poke(memAddress -767, -9216);
+        do Memory.poke(memAddress -735, -25600);
+        do Memory.poke(memAddress -703, 7168);
+        do Memory.poke(memAddress -671, 7168);
+        do Memory.poke(memAddress -639, 7168);
+        do Memory.poke(memAddress -607, 8128);
+        do Memory.poke(memAddress -575, 15868);
+        do Memory.poke(memAddress -543, -1538);
+        do Memory.poke(memAddress -511, -6145);
+        do Memory.poke(memAddress -479, 2047);
+        do Memory.poke(memAddress -447, -6145);
+        do Memory.poke(memAddress -415, -6145);
+        do Memory.poke(memAddress -383, -7170);
+        do Memory.poke(memAddress -351, -16144);
+        do Memory.poke(memAddress -319, -24608);
+        do Memory.poke(memAddress -287, 16368);
+        do Memory.poke(memAddress -255, 32752);
+        do Memory.poke(memAddress -223, 32752);
+        do Memory.poke(memAddress -191, 32736);
+        do Memory.poke(memAddress -159, 32752);
+        do Memory.poke(memAddress -127, 16368);
+        do Memory.poke(memAddress -95, 8184);
+        do Memory.poke(memAddress -63, 16376);
+        do Memory.poke(memAddress -31, 32760);
+        do Memory.poke(memAddress +1, 32752);
+        // column 2
+        if(x = 30){
+            let memAddress = memAddress - 32;
+        }
+        do Memory.poke(memAddress -926, 31);
+        do Memory.poke(memAddress -894, 63);
+        do Memory.poke(memAddress -862, 48);
+        do Memory.poke(memAddress -830, 48);
+        do Memory.poke(memAddress -798, 48);
+        do Memory.poke(memAddress -766, 55);
+        do Memory.poke(memAddress -734, 55);
+        do Memory.poke(memAddress -702, 50);
+        do Memory.poke(memAddress -670, 50);
+        do Memory.poke(memAddress -638, 50);
+        do Memory.poke(memAddress -606, 1008);
+        do Memory.poke(memAddress -574, 8176);
+        do Memory.poke(memAddress -542, 8159);
+        do Memory.poke(memAddress -510, 8143);
+        do Memory.poke(memAddress -478, 8128);
+        do Memory.poke(memAddress -446, 8135);
+        do Memory.poke(memAddress -414, 8071);
+        do Memory.poke(memAddress -382, 391);
+        do Memory.poke(memAddress -350, 507);
+        do Memory.poke(memAddress -318, 1021);
+        do Memory.poke(memAddress -286, 2046);
+        do Memory.poke(memAddress -254, 4094);
+        do Memory.poke(memAddress -222, 4094);
+        do Memory.poke(memAddress -190, 4092);
+        do Memory.poke(memAddress -158, 4094);
+        do Memory.poke(memAddress -126, 2046);
+        do Memory.poke(memAddress -94, 1023);
+        do Memory.poke(memAddress -62, 2047);
+        do Memory.poke(memAddress -30, 4095);
+        do Memory.poke(memAddress +2, 4094);
+        return;
+    }
+
+
+
+    function void kingLeft1(int x, int y) {
+        var int memAddress, location; 
+        let location = y * 32 + x; 
+        let memAddress = 16384+location;
+        // column 0
+        do Memory.poke(memAddress -928, -64);
+        do Memory.poke(memAddress -896, -32);
+        do Memory.poke(memAddress -864, -16288);
+        do Memory.poke(memAddress -832, -16288);
+        do Memory.poke(memAddress -800, -16288);
+        do Memory.poke(memAddress -768, -8352);
+        do Memory.poke(memAddress -736, -12448);
+        do Memory.poke(memAddress -704, -15776);
+        do Memory.poke(memAddress -672, -15776);
+        do Memory.poke(memAddress -640, -15776);
+        do Memory.poke(memAddress -608, -16258);
+        do Memory.poke(memAddress -576, -8065);
+        do Memory.poke(memAddress -544, -33);
+        do Memory.poke(memAddress -512, 16287);
+        do Memory.poke(memAddress -480, 31);
+        do Memory.poke(memAddress -448, 16159);
+        do Memory.poke(memAddress -416, 16143);
+        do Memory.poke(memAddress -384, 16140);
+        do Memory.poke(memAddress -352, 7932);
+        do Memory.poke(memAddress -320, -12802);
+        do Memory.poke(memAddress -288, -7169);
+        do Memory.poke(memAddress -256, -3073);
+        do Memory.poke(memAddress -224, -3073);
+        do Memory.poke(memAddress -192, -3585);
+        do Memory.poke(memAddress -160, -3073);
+        do Memory.poke(memAddress -128, -7169);
+        do Memory.poke(memAddress -96, -14338);
+        do Memory.poke(memAddress -64, -6145);
+        do Memory.poke(memAddress -32, -2049);
+        do Memory.poke(memAddress, -3073);
+        // column 1
+        if(x = 31){
+            let memAddress = memAddress - 32;
+        }
+        do Memory.poke(memAddress -927, 0);
+        do Memory.poke(memAddress -895, 1);
+        do Memory.poke(memAddress -863, 1);
+        do Memory.poke(memAddress -831, 1);
+        do Memory.poke(memAddress -799, 1);
+        do Memory.poke(memAddress -767, 1);
+        do Memory.poke(memAddress -735, 1);
+        do Memory.poke(memAddress -703, 1);
+        do Memory.poke(memAddress -671, 1);
+        do Memory.poke(memAddress -639, 1);
+        do Memory.poke(memAddress -607, 31);
+        do Memory.poke(memAddress -575, 509);
+        do Memory.poke(memAddress -543, 1020);
+        do Memory.poke(memAddress -511, 2047);
+        do Memory.poke(memAddress -479, 2047);
+        do Memory.poke(memAddress -447, 2047);
+        do Memory.poke(memAddress -415, 2047);
+        do Memory.poke(memAddress -383, 1022);
+        do Memory.poke(memAddress -351, 120);
+        do Memory.poke(memAddress -319, 63);
+        do Memory.poke(memAddress -287, 127);
+        do Memory.poke(memAddress -255, 127);
+        do Memory.poke(memAddress -223, 127);
+        do Memory.poke(memAddress -191, 63);
+        do Memory.poke(memAddress -159, 127);
+        do Memory.poke(memAddress -127, 127);
+        do Memory.poke(memAddress -95, 255);
+        do Memory.poke(memAddress -63, 255);
+        do Memory.poke(memAddress -31, 255);
+        do Memory.poke(memAddress +1, 127);
+        // column -1
+        if((x = 0) | x = 31){
+            let memAddress = memAddress + 32;
+        }
+        do Memory.poke(memAddress -929, 0);
+        do Memory.poke(memAddress -897, 0);
+        do Memory.poke(memAddress -865, 0);
+        do Memory.poke(memAddress -833, 0);
+        do Memory.poke(memAddress -801, 0);
+        do Memory.poke(memAddress -769, 0);
+        do Memory.poke(memAddress -737, 0);
+        do Memory.poke(memAddress -705, 0);
+        do Memory.poke(memAddress -673, 0);
+        do Memory.poke(memAddress -641, 0);
+        do Memory.poke(memAddress -609, 0);
+        do Memory.poke(memAddress -577, -16384);
+        do Memory.poke(memAddress -545, -16384);
+        do Memory.poke(memAddress -513, -16384);
+        do Memory.poke(memAddress -481, -16384);
+        do Memory.poke(memAddress -449, -16384);
+        do Memory.poke(memAddress -417, -16384);
+        do Memory.poke(memAddress -385, 0);
+        do Memory.poke(memAddress -353, 0);
+        do Memory.poke(memAddress -321, 0);
+        do Memory.poke(memAddress -289, 0);
+        do Memory.poke(memAddress -257, ~32767);
+        do Memory.poke(memAddress -225, ~32767);
+        do Memory.poke(memAddress -193, ~32767);
+        do Memory.poke(memAddress -161, ~32767);
+        do Memory.poke(memAddress -129, 0);
+        do Memory.poke(memAddress -97, 0);
+        do Memory.poke(memAddress -65, 0);
+        do Memory.poke(memAddress -33, ~32767);
+        do Memory.poke(memAddress -1, ~32767);
+        return;
+    }
+
+    function void kingLeft2(int x, int y) {
+        var int memAddress, location; 
+        let location = y * 32 + x;
+        let memAddress = 16384+location;
+        // column 0
+        do Memory.poke(memAddress -928, 16368);
+        do Memory.poke(memAddress -896, 32760);
+        do Memory.poke(memAddress -864, 28696);
+        do Memory.poke(memAddress -832, 28696);
+        do Memory.poke(memAddress -800, 28696);
+        do Memory.poke(memAddress -768, 30680);
+        do Memory.poke(memAddress -736, 29656);
+        do Memory.poke(memAddress -704, 28824);
+        do Memory.poke(memAddress -672, 28824);
+        do Memory.poke(memAddress -640, 28824);
+        do Memory.poke(memAddress -608, -4065);
+        do Memory.poke(memAddress -576, 30751);
+        do Memory.poke(memAddress -544, 16375);
+        do Memory.poke(memAddress -512, -12313);
+        do Memory.poke(memAddress -480, -16377);
+        do Memory.poke(memAddress -448, -12345);
+        do Memory.poke(memAddress -416, -12349);
+        do Memory.poke(memAddress -384, -28733);
+        do Memory.poke(memAddress -352, 1983);
+        do Memory.poke(memAddress -320, -3201);
+        do Memory.poke(memAddress -288, -1793);
+        do Memory.poke(memAddress -256, -769);
+        do Memory.poke(memAddress -224, -769);
+        do Memory.poke(memAddress -192, -897);
+        do Memory.poke(memAddress -160, -769);
+        do Memory.poke(memAddress -128, -1793);
+        do Memory.poke(memAddress -96, -3585);
+        do Memory.poke(memAddress -64, -1537);
+        do Memory.poke(memAddress -32, -513);
+        do Memory.poke(memAddress, -769);
+        // column 1
+        if(x = 31){
+            let memAddress = memAddress - 32;
+        }
+        do Memory.poke(memAddress -927, 0);
+        do Memory.poke(memAddress -895, 0);
+        do Memory.poke(memAddress -863, 0);
+        do Memory.poke(memAddress -831, 0);
+        do Memory.poke(memAddress -799, 0);
+        do Memory.poke(memAddress -767, 0);
+        do Memory.poke(memAddress -735, 0);
+        do Memory.poke(memAddress -703, 0);
+        do Memory.poke(memAddress -671, 0);
+        do Memory.poke(memAddress -639, 0);
+        do Memory.poke(memAddress -607, 7);
+        do Memory.poke(memAddress -575, 127);
+        do Memory.poke(memAddress -543, 255);
+        do Memory.poke(memAddress -511, 511);
+        do Memory.poke(memAddress -479, 511);
+        do Memory.poke(memAddress -447, 511);
+        do Memory.poke(memAddress -415, 511);
+        do Memory.poke(memAddress -383, 255);
+        do Memory.poke(memAddress -351, 30);
+        do Memory.poke(memAddress -319, 15);
+        do Memory.poke(memAddress -287, 31);
+        do Memory.poke(memAddress -255, 31);
+        do Memory.poke(memAddress -223, 31);
+        do Memory.poke(memAddress -191, 15);
+        do Memory.poke(memAddress -159, 31);
+        do Memory.poke(memAddress -127, 31);
+        do Memory.poke(memAddress -95, 63);
+        do Memory.poke(memAddress -63, 63);
+        do Memory.poke(memAddress -31, 63);
+        do Memory.poke(memAddress +1, 31);
+        // column -1
+        if((x = 0) | (x = 31)){
+            let memAddress = memAddress + 32;
+        }
+        do Memory.poke(memAddress -929, 0);
+        do Memory.poke(memAddress -897, 0);
+        do Memory.poke(memAddress -865, 0);
+        do Memory.poke(memAddress -833, 0);
+        do Memory.poke(memAddress -801, 0);
+        do Memory.poke(memAddress -769, 0);
+        do Memory.poke(memAddress -737, 0);
+        do Memory.poke(memAddress -705, 0);
+        do Memory.poke(memAddress -673, 0);
+        do Memory.poke(memAddress -641, 0);
+        do Memory.poke(memAddress -609, ~32767);
+        do Memory.poke(memAddress -577, -4096);
+        do Memory.poke(memAddress -545, -4096);
+        do Memory.poke(memAddress -513, -4096);
+        do Memory.poke(memAddress -481, -4096);
+        do Memory.poke(memAddress -449, -4096);
+        do Memory.poke(memAddress -417, -4096);
+        do Memory.poke(memAddress -385, 0);
+        do Memory.poke(memAddress -353, 0);
+        do Memory.poke(memAddress -321, ~32767);
+        do Memory.poke(memAddress -289, -16384);
+        do Memory.poke(memAddress -257, -8192);
+        do Memory.poke(memAddress -225, -8192);
+        do Memory.poke(memAddress -193, -8192);
+        do Memory.poke(memAddress -161, -8192);
+        do Memory.poke(memAddress -129, -16384);
+        do Memory.poke(memAddress -97, ~32767);
+        do Memory.poke(memAddress -65, -16384);
+        do Memory.poke(memAddress -33, -8192);
+        do Memory.poke(memAddress -1, -8192);
+        return;
+    }
+
+    function void kingLeft3(int x, int y) {
+        var int memAddress, location; 
+        let location = y * 32 + x;
+        let memAddress = 16384+location;
+        // column 0
+        do Memory.poke(memAddress -928, 4092);
+        do Memory.poke(memAddress -896, 8190);
+        do Memory.poke(memAddress -864, 7174);
+        do Memory.poke(memAddress -832, 7174);
+        do Memory.poke(memAddress -800, 7174);
+        do Memory.poke(memAddress -768, 7670);
+        do Memory.poke(memAddress -736, 7414);
+        do Memory.poke(memAddress -704, 7206);
+        do Memory.poke(memAddress -672, 7206);
+        do Memory.poke(memAddress -640, 7206);
+        do Memory.poke(memAddress -608, -1017);
+        do Memory.poke(memAddress -576, -8697);
+        do Memory.poke(memAddress -544, -12291);
+        do Memory.poke(memAddress -512, -3079);
+        do Memory.poke(memAddress -480, -4095);
+        do Memory.poke(memAddress -448, -3087);
+        do Memory.poke(memAddress -416, -3088);
+        do Memory.poke(memAddress -384, -7184);
+        do Memory.poke(memAddress -352, -32273);
+        do Memory.poke(memAddress -320, -801);
+        do Memory.poke(memAddress -288, -449);
+        do Memory.poke(memAddress -256, -193);
+        do Memory.poke(memAddress -224, -193);
+        do Memory.poke(memAddress -192, -225);
+        do Memory.poke(memAddress -160, -193);
+        do Memory.poke(memAddress -128, -449);
+        do Memory.poke(memAddress -96, -897);
+        do Memory.poke(memAddress -64, -385);
+        do Memory.poke(memAddress -32, -129);
+        do Memory.poke(memAddress, -193);
+        // column 1
+        if(x = 31){
+            let memAddress = memAddress - 32;
+        }
+        do Memory.poke(memAddress -927, 0);
+        do Memory.poke(memAddress -895, 0);
+        do Memory.poke(memAddress -863, 0);
+        do Memory.poke(memAddress -831, 0);
+        do Memory.poke(memAddress -799, 0);
+        do Memory.poke(memAddress -767, 0);
+        do Memory.poke(memAddress -735, 0);
+        do Memory.poke(memAddress -703, 0);
+        do Memory.poke(memAddress -671, 0);
+        do Memory.poke(memAddress -639, 0);
+        do Memory.poke(memAddress -607, 1);
+        do Memory.poke(memAddress -575, 31);
+        do Memory.poke(memAddress -543, 63);
+        do Memory.poke(memAddress -511, 127);
+        do Memory.poke(memAddress -479, 127);
+        do Memory.poke(memAddress -447, 127);
+        do Memory.poke(memAddress -415, 127);
+        do Memory.poke(memAddress -383, 63);
+        do Memory.poke(memAddress -351, 7);
+        do Memory.poke(memAddress -319, 3);
+        do Memory.poke(memAddress -287, 7);
+        do Memory.poke(memAddress -255, 7);
+        do Memory.poke(memAddress -223, 7);
+        do Memory.poke(memAddress -191, 3);
+        do Memory.poke(memAddress -159, 7);
+        do Memory.poke(memAddress -127, 7);
+        do Memory.poke(memAddress -95, 15);
+        do Memory.poke(memAddress -63, 15);
+        do Memory.poke(memAddress -31, 15);
+        do Memory.poke(memAddress +1, 7);
+        // column -1
+        if((x = 0) | (x = 31)){
+            let memAddress = memAddress + 32;
+        }
+        do Memory.poke(memAddress -929, 0);
+        do Memory.poke(memAddress -897, 0);
+        do Memory.poke(memAddress -865, 0);
+        do Memory.poke(memAddress -833, 0);
+        do Memory.poke(memAddress -801, 0);
+        do Memory.poke(memAddress -769, 0);
+        do Memory.poke(memAddress -737, 0);
+        do Memory.poke(memAddress -705, 0);
+        do Memory.poke(memAddress -673, 0);
+        do Memory.poke(memAddress -641, 0);
+        do Memory.poke(memAddress -609, -8192);
+        do Memory.poke(memAddress -577, -1024);
+        do Memory.poke(memAddress -545, -1024);
+        do Memory.poke(memAddress -513, -1024);
+        do Memory.poke(memAddress -481, -1024);
+        do Memory.poke(memAddress -449, -1024);
+        do Memory.poke(memAddress -417, -1024);
+        do Memory.poke(memAddress -385, -16384);
+        do Memory.poke(memAddress -353, -16384);
+        do Memory.poke(memAddress -321, -8192);
+        do Memory.poke(memAddress -289, -4096);
+        do Memory.poke(memAddress -257, -2048);
+        do Memory.poke(memAddress -225, -2048);
+        do Memory.poke(memAddress -193, -2048);
+        do Memory.poke(memAddress -161, -2048);
+        do Memory.poke(memAddress -129, -4096);
+        do Memory.poke(memAddress -97, -8192);
+        do Memory.poke(memAddress -65, -4096);
+        do Memory.poke(memAddress -33, -2048);
+        do Memory.poke(memAddress -1, -2048);
+        return;
+    }
+
+    function void kingLeft4(int x, int y) {
+        var int memAddress, location; 
+        let location = y * 32 + x;
+        let memAddress = 16384+location;
+        // column 0
+        do Memory.poke(memAddress -928, 1023);
+        do Memory.poke(memAddress -896, 2047);
+        do Memory.poke(memAddress -864, 1793);
+        do Memory.poke(memAddress -832, 1793);
+        do Memory.poke(memAddress -800, 1793);
+        do Memory.poke(memAddress -768, 1917);
+        do Memory.poke(memAddress -736, 1853);
+        do Memory.poke(memAddress -704, 1801);
+        do Memory.poke(memAddress -672, 1801);
+        do Memory.poke(memAddress -640, 1801);
+        do Memory.poke(memAddress -608, 32513);
+        do Memory.poke(memAddress -576, -2175);
+        do Memory.poke(memAddress -544, -3073);
+        do Memory.poke(memAddress -512, -770);
+        do Memory.poke(memAddress -480, -1024);
+        do Memory.poke(memAddress -448, -772);
+        do Memory.poke(memAddress -416, -772);
+        do Memory.poke(memAddress -384, -1796);
+        do Memory.poke(memAddress -352, -8069);
+        do Memory.poke(memAddress -320, -201);
+        do Memory.poke(memAddress -288, -113);
+        do Memory.poke(memAddress -256, -49);
+        do Memory.poke(memAddress -224, -49);
+        do Memory.poke(memAddress -192, -57);
+        do Memory.poke(memAddress -160, -49);
+        do Memory.poke(memAddress -128, -113);
+        do Memory.poke(memAddress -96, -225);
+        do Memory.poke(memAddress -64, -97);
+        do Memory.poke(memAddress -32, -33);
+        do Memory.poke(memAddress, -49);
+        // column 1
+        if(x = 31){
+            let memAddress = memAddress - 32;
+        }
+        do Memory.poke(memAddress -927, 0);
+        do Memory.poke(memAddress -895, 0);
+        do Memory.poke(memAddress -863, 0);
+        do Memory.poke(memAddress -831, 0);
+        do Memory.poke(memAddress -799, 0);
+        do Memory.poke(memAddress -767, 0);
+        do Memory.poke(memAddress -735, 0);
+        do Memory.poke(memAddress -703, 0);
+        do Memory.poke(memAddress -671, 0);
+        do Memory.poke(memAddress -639, 0);
+        do Memory.poke(memAddress -607, 0);
+        do Memory.poke(memAddress -575, 7);
+        do Memory.poke(memAddress -543, 15);
+        do Memory.poke(memAddress -511, 31);
+        do Memory.poke(memAddress -479, 31);
+        do Memory.poke(memAddress -447, 31);
+        do Memory.poke(memAddress -415, 31);
+        do Memory.poke(memAddress -383, 15);
+        do Memory.poke(memAddress -351, 1);
+        do Memory.poke(memAddress -319, 0);
+        do Memory.poke(memAddress -287, 1);
+        do Memory.poke(memAddress -255, 1);
+        do Memory.poke(memAddress -223, 1);
+        do Memory.poke(memAddress -191, 0);
+        do Memory.poke(memAddress -159, 1);
+        do Memory.poke(memAddress -127, 1);
+        do Memory.poke(memAddress -95, 3);
+        do Memory.poke(memAddress -63, 3);
+        do Memory.poke(memAddress -31, 3);
+        do Memory.poke(memAddress +1, 1);
+        // column -1
+        if((x = 0) | (x = 31)){
+            let memAddress = memAddress + 32;
+        }
+        do Memory.poke(memAddress -929, 0);
+        do Memory.poke(memAddress -897, ~32767);
+        do Memory.poke(memAddress -865, ~32767);
+        do Memory.poke(memAddress -833, ~32767);
+        do Memory.poke(memAddress -801, ~32767);
+        do Memory.poke(memAddress -769, ~32767);
+        do Memory.poke(memAddress -737, ~32767);
+        do Memory.poke(memAddress -705, ~32767);
+        do Memory.poke(memAddress -673, ~32767);
+        do Memory.poke(memAddress -641, ~32767);
+        do Memory.poke(memAddress -609, -2048);
+        do Memory.poke(memAddress -577, -256);
+        do Memory.poke(memAddress -545, 32512);
+        do Memory.poke(memAddress -513, 32512);
+        do Memory.poke(memAddress -481, 32512);
+        do Memory.poke(memAddress -449, 32512);
+        do Memory.poke(memAddress -417, 16128);
+        do Memory.poke(memAddress -385, 12288);
+        do Memory.poke(memAddress -353, -4096);
+        do Memory.poke(memAddress -321, -2048);
+        do Memory.poke(memAddress -289, -1024);
+        do Memory.poke(memAddress -257, -512);
+        do Memory.poke(memAddress -225, -512);
+        do Memory.poke(memAddress -193, -512);
+        do Memory.poke(memAddress -161, -512);
+        do Memory.poke(memAddress -129, -1024);
+        do Memory.poke(memAddress -97, -2048);
+        do Memory.poke(memAddress -65, -1024);
+        do Memory.poke(memAddress -33, -512);
+        do Memory.poke(memAddress -1, -512);
+        return;
+    }
+
+    function void kingLeft5(int x, int y) {
+        var int memAddress, location; 
+        let location = y * 32 + x;
+        let memAddress = 16384+location;
+        // column 0
+        do Memory.poke(memAddress -928, 255);
+        do Memory.poke(memAddress -896, 511);
+        do Memory.poke(memAddress -864, 448);
+        do Memory.poke(memAddress -832, 448);
+        do Memory.poke(memAddress -800, 448);
+        do Memory.poke(memAddress -768, 479);
+        do Memory.poke(memAddress -736, 463);
+        do Memory.poke(memAddress -704, 450);
+        do Memory.poke(memAddress -672, 450);
+        do Memory.poke(memAddress -640, 450);
+        do Memory.poke(memAddress -608, 8128);
+        do Memory.poke(memAddress -576, -544);
+        do Memory.poke(memAddress -544, -769);
+        do Memory.poke(memAddress -512, -193);
+        do Memory.poke(memAddress -480, -256);
+        do Memory.poke(memAddress -448, -193);
+        do Memory.poke(memAddress -416, -193);
+        do Memory.poke(memAddress -384, -449);
+        do Memory.poke(memAddress -352, 30750);
+        do Memory.poke(memAddress -320, 16333);
+        do Memory.poke(memAddress -288, 32739);
+        do Memory.poke(memAddress -256, 32755);
+        do Memory.poke(memAddress -224, 32755);
+        do Memory.poke(memAddress -192, 16369);
+        do Memory.poke(memAddress -160, 32755);
+        do Memory.poke(memAddress -128, 32739);
+        do Memory.poke(memAddress -96, -57);
+        do Memory.poke(memAddress -64, -25);
+        do Memory.poke(memAddress -32, -9);
+        do Memory.poke(memAddress, 32755);
+        // column 1
+        if(x = 31){
+            let memAddress = memAddress - 32;
+        }
+        do Memory.poke(memAddress -927, 0);
+        do Memory.poke(memAddress -895, 0);
+        do Memory.poke(memAddress -863, 0);
+        do Memory.poke(memAddress -831, 0);
+        do Memory.poke(memAddress -799, 0);
+        do Memory.poke(memAddress -767, 0);
+        do Memory.poke(memAddress -735, 0);
+        do Memory.poke(memAddress -703, 0);
+        do Memory.poke(memAddress -671, 0);
+        do Memory.poke(memAddress -639, 0);
+        do Memory.poke(memAddress -607, 0);
+        do Memory.poke(memAddress -575, 1);
+        do Memory.poke(memAddress -543, 3);
+        do Memory.poke(memAddress -511, 7);
+        do Memory.poke(memAddress -479, 7);
+        do Memory.poke(memAddress -447, 7);
+        do Memory.poke(memAddress -415, 7);
+        do Memory.poke(memAddress -383, 3);
+        do Memory.poke(memAddress -351, 0);
+        do Memory.poke(memAddress -319, 0);
+        do Memory.poke(memAddress -287, 0);
+        do Memory.poke(memAddress -255, 0);
+        do Memory.poke(memAddress -223, 0);
+        do Memory.poke(memAddress -191, 0);
+        do Memory.poke(memAddress -159, 0);
+        do Memory.poke(memAddress -127, 0);
+        do Memory.poke(memAddress -95, 0);
+        do Memory.poke(memAddress -63, 0);
+        do Memory.poke(memAddress -31, 0);
+        do Memory.poke(memAddress +1, 0);
+        // column -1
+        if((x = 0) | (x = 31)){
+            let memAddress = memAddress + 32;
+        }
+        do Memory.poke(memAddress -929, -16384);
+        do Memory.poke(memAddress -897, -8192);
+        do Memory.poke(memAddress -865, 24576);
+        do Memory.poke(memAddress -833, 24576);
+        do Memory.poke(memAddress -801, 24576);
+        do Memory.poke(memAddress -769, 24576);
+        do Memory.poke(memAddress -737, 24576);
+        do Memory.poke(memAddress -705, 24576);
+        do Memory.poke(memAddress -673, 24576);
+        do Memory.poke(memAddress -641, 24576);
+        do Memory.poke(memAddress -609, 32256);
+        do Memory.poke(memAddress -577, 32704);
+        do Memory.poke(memAddress -545, -8256);
+        do Memory.poke(memAddress -513, -24640);
+        do Memory.poke(memAddress -481, 8128);
+        do Memory.poke(memAddress -449, 8128);
+        do Memory.poke(memAddress -417, 4032);
+        do Memory.poke(memAddress -385, 3072);
+        do Memory.poke(memAddress -353, -1024);
+        do Memory.poke(memAddress -321, -512);
+        do Memory.poke(memAddress -289, -256);
+        do Memory.poke(memAddress -257, -128);
+        do Memory.poke(memAddress -225, -128);
+        do Memory.poke(memAddress -193, -128);
+        do Memory.poke(memAddress -161, -128);
+        do Memory.poke(memAddress -129, -256);
+        do Memory.poke(memAddress -97, -512);
+        do Memory.poke(memAddress -65, -256);
+        do Memory.poke(memAddress -33, -128);
+        do Memory.poke(memAddress -1, -128);
+        return;
+    }
+
+    function void kingLeft6(int x, int y) {
+        var int memAddress, location; 
+        let location = y * 32 + x;
+        let memAddress = 16384+location;
+        // column 0
+        do Memory.poke(memAddress -928, 63);
+        do Memory.poke(memAddress -896, 127);
+        do Memory.poke(memAddress -864, 112);
+        do Memory.poke(memAddress -832, 112);
+        do Memory.poke(memAddress -800, 112);
+        do Memory.poke(memAddress -768, 119);
+        do Memory.poke(memAddress -736, 115);
+        do Memory.poke(memAddress -704, 112);
+        do Memory.poke(memAddress -672, 112);
+        do Memory.poke(memAddress -640, 112);
+        do Memory.poke(memAddress -608, 2032);
+        do Memory.poke(memAddress -576, 32632);
+        do Memory.poke(memAddress -544, -193);
+        do Memory.poke(memAddress -512, -49);
+        do Memory.poke(memAddress -480, -64);
+        do Memory.poke(memAddress -448, -49);
+        do Memory.poke(memAddress -416, -49);
+        do Memory.poke(memAddress -384, -113);
+        do Memory.poke(memAddress -352, 7687);
+        do Memory.poke(memAddress -320, 4083);
+        do Memory.poke(memAddress -288, 8184);
+        do Memory.poke(memAddress -256, 8188);
+        do Memory.poke(memAddress -224, 8188);
+        do Memory.poke(memAddress -192, 4092);
+        do Memory.poke(memAddress -160, 8188);
+        do Memory.poke(memAddress -128, 8184);
+        do Memory.poke(memAddress -96, 16369);
+        do Memory.poke(memAddress -64, 16377);
+        do Memory.poke(memAddress -32, 16381);
+        do Memory.poke(memAddress, 8188);
+        // column 1
+        if(x = 31){
+            let memAddress = memAddress - 32;
+        }
+        do Memory.poke(memAddress -927, 0);
+        do Memory.poke(memAddress -895, 0);
+        do Memory.poke(memAddress -863, 0);
+        do Memory.poke(memAddress -831, 0);
+        do Memory.poke(memAddress -799, 0);
+        do Memory.poke(memAddress -767, 0);
+        do Memory.poke(memAddress -735, 0);
+        do Memory.poke(memAddress -703, 0);
+        do Memory.poke(memAddress -671, 0);
+        do Memory.poke(memAddress -639, 0);
+        do Memory.poke(memAddress -607, 0);
+        do Memory.poke(memAddress -575, 0);
+        do Memory.poke(memAddress -543, 0);
+        do Memory.poke(memAddress -511, 1);
+        do Memory.poke(memAddress -479, 1);
+        do Memory.poke(memAddress -447, 1);
+        do Memory.poke(memAddress -415, 1);
+        do Memory.poke(memAddress -383, 0);
+        do Memory.poke(memAddress -351, 0);
+        do Memory.poke(memAddress -319, 0);
+        do Memory.poke(memAddress -287, 0);
+        do Memory.poke(memAddress -255, 0);
+        do Memory.poke(memAddress -223, 0);
+        do Memory.poke(memAddress -191, 0);
+        do Memory.poke(memAddress -159, 0);
+        do Memory.poke(memAddress -127, 0);
+        do Memory.poke(memAddress -95, 0);
+        do Memory.poke(memAddress -63, 0);
+        do Memory.poke(memAddress -31, 0);
+        do Memory.poke(memAddress +1, 0);
+        // column -1
+        if((x = 0) | (x = 31)){
+            let memAddress = memAddress + 32;
+        }
+        do Memory.poke(memAddress -929, -4096);
+        do Memory.poke(memAddress -897, -2048);
+        do Memory.poke(memAddress -865, 6144);
+        do Memory.poke(memAddress -833, 6144);
+        do Memory.poke(memAddress -801, 6144);
+        do Memory.poke(memAddress -769, -10240);
+        do Memory.poke(memAddress -737, -10240);
+        do Memory.poke(memAddress -705, -26624);
+        do Memory.poke(memAddress -673, -26624);
+        do Memory.poke(memAddress -641, -26624);
+        do Memory.poke(memAddress -609, 8064);
+        do Memory.poke(memAddress -577, 8176);
+        do Memory.poke(memAddress -545, -2064);
+        do Memory.poke(memAddress -513, -6160);
+        do Memory.poke(memAddress -481, 2032);
+        do Memory.poke(memAddress -449, -14352);
+        do Memory.poke(memAddress -417, -15376);
+        do Memory.poke(memAddress -385, -15616);
+        do Memory.poke(memAddress -353, -16640);
+        do Memory.poke(memAddress -321, 32640);
+        do Memory.poke(memAddress -289, -64);
+        do Memory.poke(memAddress -257, -32);
+        do Memory.poke(memAddress -225, -32);
+        do Memory.poke(memAddress -193, 32736);
+        do Memory.poke(memAddress -161, -32);
+        do Memory.poke(memAddress -129, -64);
+        do Memory.poke(memAddress -97, -128);
+        do Memory.poke(memAddress -65, -64);
+        do Memory.poke(memAddress -33, -32);
+        do Memory.poke(memAddress -1, -32);
+        return;
+    }
+
+    function void kingLeft7(int x, int y) {
+        var int memAddress, location; 
+        let location = y * 32 + x;
+        let memAddress = 16384+location;
+        // column 0
+        do Memory.poke(memAddress -928, 15);
+        do Memory.poke(memAddress -896, 31);
+        do Memory.poke(memAddress -864, 28);
+        do Memory.poke(memAddress -832, 28);
+        do Memory.poke(memAddress -800, 28);
+        do Memory.poke(memAddress -768, 29);
+        do Memory.poke(memAddress -736, 28);
+        do Memory.poke(memAddress -704, 28);
+        do Memory.poke(memAddress -672, 28);
+        do Memory.poke(memAddress -640, 28);
+        do Memory.poke(memAddress -608, 508);
+        do Memory.poke(memAddress -576, 8158);
+        do Memory.poke(memAddress -544, 16335);
+        do Memory.poke(memAddress -512, 32755);
+        do Memory.poke(memAddress -480, 32752);
+        do Memory.poke(memAddress -448, 32755);
+        do Memory.poke(memAddress -416, 32755);
+        do Memory.poke(memAddress -384, 16355);
+        do Memory.poke(memAddress -352, 1921);
+        do Memory.poke(memAddress -320, 1020);
+        do Memory.poke(memAddress -288, 2046);
+        do Memory.poke(memAddress -256, 2047);
+        do Memory.poke(memAddress -224, 2047);
+        do Memory.poke(memAddress -192, 1023);
+        do Memory.poke(memAddress -160, 2047);
+        do Memory.poke(memAddress -128, 2046);
+        do Memory.poke(memAddress -96, 4092);
+        do Memory.poke(memAddress -64, 4094);
+        do Memory.poke(memAddress -32, 4095);
+        do Memory.poke(memAddress, 2047);
+        // column 1
+        if(x = 31){
+            let memAddress = memAddress - 32;
+        }
+        do Memory.poke(memAddress -927, 0);
+        do Memory.poke(memAddress -895, 0);
+        do Memory.poke(memAddress -863, 0);
+        do Memory.poke(memAddress -831, 0);
+        do Memory.poke(memAddress -799, 0);
+        do Memory.poke(memAddress -767, 0);
+        do Memory.poke(memAddress -735, 0);
+        do Memory.poke(memAddress -703, 0);
+        do Memory.poke(memAddress -671, 0);
+        do Memory.poke(memAddress -639, 0);
+        do Memory.poke(memAddress -607, 0);
+        do Memory.poke(memAddress -575, 0);
+        do Memory.poke(memAddress -543, 0);
+        do Memory.poke(memAddress -511, 0);
+        do Memory.poke(memAddress -479, 0);
+        do Memory.poke(memAddress -447, 0);
+        do Memory.poke(memAddress -415, 0);
+        do Memory.poke(memAddress -383, 0);
+        do Memory.poke(memAddress -351, 0);
+        do Memory.poke(memAddress -319, 0);
+        do Memory.poke(memAddress -287, 0);
+        do Memory.poke(memAddress -255, 0);
+        do Memory.poke(memAddress -223, 0);
+        do Memory.poke(memAddress -191, 0);
+        do Memory.poke(memAddress -159, 0);
+        do Memory.poke(memAddress -127, 0);
+        do Memory.poke(memAddress -95, 0);
+        do Memory.poke(memAddress -63, 0);
+        do Memory.poke(memAddress -31, 0);
+        do Memory.poke(memAddress +1, 0);
+        // column -1
+        if((x = 0) | (x = 31)){
+            let memAddress = memAddress + 32;
+        }
+        do Memory.poke(memAddress -929, -1024);
+        do Memory.poke(memAddress -897, -512);
+        do Memory.poke(memAddress -865, 1536);
+        do Memory.poke(memAddress -833, 1536);
+        do Memory.poke(memAddress -801, 1536);
+        do Memory.poke(memAddress -769, -2560);
+        do Memory.poke(memAddress -737, -2560);
+        do Memory.poke(memAddress -705, 9728);
+        do Memory.poke(memAddress -673, 9728);
+        do Memory.poke(memAddress -641, 9728);
+        do Memory.poke(memAddress -609, 2016);
+        do Memory.poke(memAddress -577, 2044);
+        do Memory.poke(memAddress -545, -516);
+        do Memory.poke(memAddress -513, -1540);
+        do Memory.poke(memAddress -481, 508);
+        do Memory.poke(memAddress -449, -3588);
+        do Memory.poke(memAddress -417, -3844);
+        do Memory.poke(memAddress -385, -3904);
+        do Memory.poke(memAddress -353, -4160);
+        do Memory.poke(memAddress -321, -8224);
+        do Memory.poke(memAddress -289, 16368);
+        do Memory.poke(memAddress -257, 16376);
+        do Memory.poke(memAddress -225, 16376);
+        do Memory.poke(memAddress -193, 8184);
+        do Memory.poke(memAddress -161, 16376);
+        do Memory.poke(memAddress -129, 16368);
+        do Memory.poke(memAddress -97, 32736);
+        do Memory.poke(memAddress -65, 32752);
+        do Memory.poke(memAddress -33, 32760);
+        do Memory.poke(memAddress -1, 16376);
+        return;
+    }
+
+    function void kingLeft8(int x, int y) {
+        var int memAddress, location; 
+        let location = y * 32 + x;
+        let memAddress = 16384+location;
+        // column 0
+        do Memory.poke(memAddress -928, 3);
+        do Memory.poke(memAddress -896, 7);
+        do Memory.poke(memAddress -864, 7);
+        do Memory.poke(memAddress -832, 7);
+        do Memory.poke(memAddress -800, 7);
+        do Memory.poke(memAddress -768, 7);
+        do Memory.poke(memAddress -736, 7);
+        do Memory.poke(memAddress -704, 7);
+        do Memory.poke(memAddress -672, 7);
+        do Memory.poke(memAddress -640, 7);
+        do Memory.poke(memAddress -608, 127);
+        do Memory.poke(memAddress -576, 2039);
+        do Memory.poke(memAddress -544, 4083);
+        do Memory.poke(memAddress -512, 8188);
+        do Memory.poke(memAddress -480, 8188);
+        do Memory.poke(memAddress -448, 8188);
+        do Memory.poke(memAddress -416, 8188);
+        do Memory.poke(memAddress -384, 4088);
+        do Memory.poke(memAddress -352, 480);
+        do Memory.poke(memAddress -320, 255);
+        do Memory.poke(memAddress -288, 511);
+        do Memory.poke(memAddress -256, 511);
+        do Memory.poke(memAddress -224, 511);
+        do Memory.poke(memAddress -192, 255);
+        do Memory.poke(memAddress -160, 511);
+        do Memory.poke(memAddress -128, 511);
+        do Memory.poke(memAddress -96, 1023);
+        do Memory.poke(memAddress -64, 1023);
+        do Memory.poke(memAddress -32, 1023);
+        do Memory.poke(memAddress, 511);
+        // column 1
+        if(x = 31){
+            let memAddress = memAddress - 32;
+        }
+        do Memory.poke(memAddress -927, 0);
+        do Memory.poke(memAddress -895, 0);
+        do Memory.poke(memAddress -863, 0);
+        do Memory.poke(memAddress -831, 0);
+        do Memory.poke(memAddress -799, 0);
+        do Memory.poke(memAddress -767, 0);
+        do Memory.poke(memAddress -735, 0);
+        do Memory.poke(memAddress -703, 0);
+        do Memory.poke(memAddress -671, 0);
+        do Memory.poke(memAddress -639, 0);
+        do Memory.poke(memAddress -607, 0);
+        do Memory.poke(memAddress -575, 0);
+        do Memory.poke(memAddress -543, 0);
+        do Memory.poke(memAddress -511, 0);
+        do Memory.poke(memAddress -479, 0);
+        do Memory.poke(memAddress -447, 0);
+        do Memory.poke(memAddress -415, 0);
+        do Memory.poke(memAddress -383, 0);
+        do Memory.poke(memAddress -351, 0);
+        do Memory.poke(memAddress -319, 0);
+        do Memory.poke(memAddress -287, 0);
+        do Memory.poke(memAddress -255, 0);
+        do Memory.poke(memAddress -223, 0);
+        do Memory.poke(memAddress -191, 0);
+        do Memory.poke(memAddress -159, 0);
+        do Memory.poke(memAddress -127, 0);
+        do Memory.poke(memAddress -95, 0);
+        do Memory.poke(memAddress -63, 0);
+        do Memory.poke(memAddress -31, 0);
+        do Memory.poke(memAddress +1, 0);
+        // column -1
+        if((x = 0) | (x = 31)){
+            let memAddress = memAddress + 32;
+        }
+        do Memory.poke(memAddress -929, -256);
+        do Memory.poke(memAddress -897, -128);
+        do Memory.poke(memAddress -865, 384);
+        do Memory.poke(memAddress -833, 384);
+        do Memory.poke(memAddress -801, 384);
+        do Memory.poke(memAddress -769, 32128);
+        do Memory.poke(memAddress -737, 15744);
+        do Memory.poke(memAddress -705, 2432);
+        do Memory.poke(memAddress -673, 2432);
+        do Memory.poke(memAddress -641, 2432);
+        do Memory.poke(memAddress -609, 504);
+        do Memory.poke(memAddress -577, -32257);
+        do Memory.poke(memAddress -545, -129);
+        do Memory.poke(memAddress -513, -385);
+        do Memory.poke(memAddress -481, 127);
+        do Memory.poke(memAddress -449, -897);
+        do Memory.poke(memAddress -417, -961);
+        do Memory.poke(memAddress -385, -976);
+        do Memory.poke(memAddress -353, 31728);
+        do Memory.poke(memAddress -321, 14328);
+        do Memory.poke(memAddress -289, -28676);
+        do Memory.poke(memAddress -257, -12290);
+        do Memory.poke(memAddress -225, -12290);
+        do Memory.poke(memAddress -193, -14338);
+        do Memory.poke(memAddress -161, -12290);
+        do Memory.poke(memAddress -129, -28676);
+        do Memory.poke(memAddress -97, 8184);
+        do Memory.poke(memAddress -65, -24580);
+        do Memory.poke(memAddress -33, -8194);
+        do Memory.poke(memAddress -1, -12290);
+        return;
+    }
+}

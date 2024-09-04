@@ -1,155 +1,454 @@
 class King{
-    field int m, F;
+    field int maxOffset, maxWidth, maxHeight; //maxWidth is max number of locations
+    field int prevX, prevY, prevOffset;
+    field int currX, currY, currOffset;
+    field int direction, prevDirection;
+    field int dx, dy; 
+    field int gravity, g, airTime;
+    field int hitboxX, hitboxY, hitboxW, hitboxH;
+    field boolean landed;
+    field Array debug;
 
-    constructor King new(){
-        let F = 78;
-        let m = 6 * 1000;
+
+    constructor King new(int x, int y){
+        /*
+        location = y * 32 + x;
+        0 <= x <= 32 
+        0 <= y <= 255
+        0 <= offset < 8 
+        
+        Idea with gravity:
+        i want to reach max height in 1s => dy should be 0 that is
+        dy = -gravity in 1s => dy = 2 and i keep track of airTime counter
+        because gravity = (airTime / FPS) * GRAVITY => airTime / FPS = 1 when 
+	    airTime = FPS which is in 1s of airTime
+        */
+
+        //initialze variables
+        let currX = x;
+        let currY = y;
+        let currOffset = 0;
+
+        //NOTE: currX nije prevX samo u jednom inputu
+        let prevX = x;
+        let prevY = y;
+        let prevOffset = 0;
+        
+        let dx = 1;
+        let dy = -4;
+        let gravity = -dy + 1; //airTime = 48 => dy = g
+        let g = 0;
+        let airTime = 0;
+
+        let prevDirection = 132;
+        let direction = 132; //130 - left, 132 - right
+        let landed = false;
+
+        let maxOffset = 8;
+        let maxHeight = 256;
+        let debug = Array.new(10);
+
+        do render();
+
         return this;
     }
 
+    // setters
+    method void setX(int x){
+        let prevX = currX;
+        let currX = Utils.mod(x, maxWidth); 
+        return;
+    }
 
+    method void setY(int y){
+        //Really wierd cases
+        if(y < 30){
+            let currY = currY - 30; 
+            //erase residue will only take care of king's
+            //hight if going downwards
+            do eraseResidue();
+            let currY = 256 - (30 - y);
+            let prevY = 255;
+        }
+        else{if(y > 255){
+            let prevY = currY;
+            let currY = 255 + 30;
+            do eraseResidue();
+            let currY = 30 + (y - 255);
+            let prevY = 30;
+        }else{
+            let prevY = currY;
+            let currY = y;
+        }}
+        return;
+    }
+
+    method void setOffset(int offset){
+        let prevOffset = currOffset;
+        let currOffset = Utils.mod(offset, maxOffset); 
+        return;
+    }
+
+    method void setDirection(int key){
+        //prevDirection cannot be upward(131)
+        //prevDirection is the one holding king's orientation that was
+        //before this input
+        if(~(direction = 131)){
+            let prevDirection = direction;
+        }
+        let direction = key;
+        return;
+    }
     
+    //getters
+    method int getX()       { return currX; }
+    method int getY()       { return currY; }
+    method int getOffset()  { return currOffset; }
+     
+    method void refresh(int duration, int FPS){
+        //NOTE: tracking inputs: on every refresh, update previous variables
+        //      by calling for example setX(currX)
+        if(duration > 0){
+            //move up
+            do moveVertical(FPS);
+        }else{
+            do setY(currY);
+        }
 
-    //draw default king on location
-    function void draw1(int location) {
-        var int memAddress; 
-        let memAddress = 16384+location;
-        // column 0
-        do Memory.poke(memAddress -928, -2048);
-        do Memory.poke(memAddress -896, -1024);
-        do Memory.poke(memAddress -864, 7168);
-        do Memory.poke(memAddress -832, 7168);
-        do Memory.poke(memAddress -800, 7168);
-        do Memory.poke(memAddress -768, -9216);
-        do Memory.poke(memAddress -736, -25600);
-        do Memory.poke(memAddress -704, 7168);
-        do Memory.poke(memAddress -672, 7168);
-        do Memory.poke(memAddress -640, 7168);
-        do Memory.poke(memAddress -608, 8128);
-        do Memory.poke(memAddress -576, 15868);
-        do Memory.poke(memAddress -544, -1538);
-        do Memory.poke(memAddress -512, -6145);
-        do Memory.poke(memAddress -480, 2047);
-        do Memory.poke(memAddress -448, -6145);
-        do Memory.poke(memAddress -416, -6145);
-        do Memory.poke(memAddress -384, -7170);
-        do Memory.poke(memAddress -352, -16144);
-        do Memory.poke(memAddress -320, -24608);
-        do Memory.poke(memAddress -288, 16368);
-        do Memory.poke(memAddress -256, 32752);
-        do Memory.poke(memAddress -224, 32752);
-        do Memory.poke(memAddress -192, 32736);
-        do Memory.poke(memAddress -160, 32752);
-        do Memory.poke(memAddress -128, 16368);
-        do Memory.poke(memAddress -96, 8184);
-        do Memory.poke(memAddress -64, 16376);
-        do Memory.poke(memAddress -32, 32760);
-        do Memory.poke(memAddress, 32752);
-        // column 1
-        do Memory.poke(memAddress -927, 31);
-        do Memory.poke(memAddress -895, 63);
-        do Memory.poke(memAddress -863, 48);
-        do Memory.poke(memAddress -831, 48);
-        do Memory.poke(memAddress -799, 48);
-        do Memory.poke(memAddress -767, 55);
-        do Memory.poke(memAddress -735, 55);
-        do Memory.poke(memAddress -703, 50);
-        do Memory.poke(memAddress -671, 50);
-        do Memory.poke(memAddress -639, 50);
-        do Memory.poke(memAddress -607, 1008);
-        do Memory.poke(memAddress -575, 8176);
-        do Memory.poke(memAddress -543, 8159);
-        do Memory.poke(memAddress -511, 8143);
-        do Memory.poke(memAddress -479, 8128);
-        do Memory.poke(memAddress -447, 8135);
-        do Memory.poke(memAddress -415, 8071);
-        do Memory.poke(memAddress -383, 391);
-        do Memory.poke(memAddress -351, 507);
-        do Memory.poke(memAddress -319, 1021);
-        do Memory.poke(memAddress -287, 2046);
-        do Memory.poke(memAddress -255, 4094);
-        do Memory.poke(memAddress -223, 4094);
-        do Memory.poke(memAddress -191, 4092);
-        do Memory.poke(memAddress -159, 4094);
-        do Memory.poke(memAddress -127, 2046);
-        do Memory.poke(memAddress -95, 1023);
-        do Memory.poke(memAddress -63, 2047);
-        do Memory.poke(memAddress -31, 4095);
-        do Memory.poke(memAddress +1, 4094);
+        if(~(direction = 131)){
+            do moveSideways();
+        }else{
+            do setX(currX);
+            do setOffset(currOffset);
+        }
         return;
     }
 
-    //draw default king 2 pixels above
-    function void draw2(int location) {
-        var int memAddress; 
-        let memAddress = 16384+location;
-        // column 0
-        do Memory.poke(memAddress -992, -2048);
-        do Memory.poke(memAddress -960, -1024);
-        do Memory.poke(memAddress -928, 7168);
-        do Memory.poke(memAddress -896, 7168);
-        do Memory.poke(memAddress -864, 7168);
-        do Memory.poke(memAddress -832, -9216);
-        do Memory.poke(memAddress -800, -25600);
-        do Memory.poke(memAddress -768, 7168);
-        do Memory.poke(memAddress -736, 7168);
-        do Memory.poke(memAddress -704, 7168);
-        do Memory.poke(memAddress -672, 8128);
-        do Memory.poke(memAddress -640, 7676);
-        do Memory.poke(memAddress -608, -1538);
-        do Memory.poke(memAddress -576, -6145);
-        do Memory.poke(memAddress -544, 2047);
-        do Memory.poke(memAddress -512, -6145);
-        do Memory.poke(memAddress -480, -6145);
-        do Memory.poke(memAddress -448, -7170);
-        do Memory.poke(memAddress -416, -16144);
-        do Memory.poke(memAddress -384, -24608);
-        do Memory.poke(memAddress -352, 16368);
-        do Memory.poke(memAddress -320, 32752);
-        do Memory.poke(memAddress -288, 32752);
-        do Memory.poke(memAddress -256, 32736);
-        do Memory.poke(memAddress -224, 32752);
-        do Memory.poke(memAddress -192, 16368);
-        do Memory.poke(memAddress -160, 8184);
-        do Memory.poke(memAddress -128, 16376);
-        do Memory.poke(memAddress -96, 32760);
-        do Memory.poke(memAddress -64, 32752);
-        do Memory.poke(memAddress -32, 0);
-        do Memory.poke(memAddress, 0);
-        // column 1
-        do Memory.poke(memAddress -991, 31);
-        do Memory.poke(memAddress -959, 63);
-        do Memory.poke(memAddress -927, 48);
-        do Memory.poke(memAddress -895, 48);
-        do Memory.poke(memAddress -863, 48);
-        do Memory.poke(memAddress -831, 55);
-        do Memory.poke(memAddress -799, 55);
-        do Memory.poke(memAddress -767, 50);
-        do Memory.poke(memAddress -735, 50);
-        do Memory.poke(memAddress -703, 50);
-        do Memory.poke(memAddress -671, 1008);
-        do Memory.poke(memAddress -639, 8176);
-        do Memory.poke(memAddress -607, 8159);
-        do Memory.poke(memAddress -575, 8143);
-        do Memory.poke(memAddress -543, 8128);
-        do Memory.poke(memAddress -511, 8135);
-        do Memory.poke(memAddress -479, 8071);
-        do Memory.poke(memAddress -447, 391);
-        do Memory.poke(memAddress -415, 507);
-        do Memory.poke(memAddress -383, 1021);
-        do Memory.poke(memAddress -351, 2046);
-        do Memory.poke(memAddress -319, 4094);
-        do Memory.poke(memAddress -287, 4094);
-        do Memory.poke(memAddress -255, 4092);
-        do Memory.poke(memAddress -223, 4094);
-        do Memory.poke(memAddress -191, 2046);
-        do Memory.poke(memAddress -159, 1023);
-        do Memory.poke(memAddress -127, 2047);
-        do Memory.poke(memAddress -95, 4095);
-        do Memory.poke(memAddress -63, 4094);
-        do Memory.poke(memAddress -31, 0);
-        do Memory.poke(memAddress +1, 0);
+    method void moveVertical(int FPS){
+        let g = (airTime * gravity) / FPS;
+        do setY(currY + dy + g);
+        let airTime = airTime + 1;
         return;
     }
 
+    method void moveSideways(){
+        if(~(prevDirection = direction)){
+            if(direction = 132){
+                do setX(currX - 1);
+            }else{
+                do setX(currX + 1);
+            }
+            //apply symmetry to offset
+            //it doesnt change prevOffset
+            let currOffset = (maxOffset - 1) - currOffset;
+        }
+
+        do setOffset(currOffset + dx);
+
+        if(currOffset = 0){
+            if(direction = 130){
+                do setX(currX - 1);
+            }else{
+                do setX(currX + 1);
+            }
+        }else{
+            do setX(currX);
+        }
+
+        return;
+    }
+
+
+    method void kingRender(){
+        var int dir;
+
+        let dir = direction;
+        if(dir = 131){  
+            let dir = prevDirection;
+        }
+
+        if((currOffset = 0) & ~(prevX = currX)){
+            if(dir = 132){
+                do Graphics.kingRight8(prevX, currY);
+            }else{
+                do Graphics.kingLeft8(prevX, currY);
+            }
+        }
+
+        //only 0 offset requires previous position(only X)
+        if((currOffset = 0) & (prevX = currX)){
+            do Graphics.kingIdle(currX, currY);
+        }
+
+        if(currOffset = 1){
+            if(dir = 132){
+                do Graphics.kingRight1(currX, currY);
+            }else{
+                do Graphics.kingLeft1(currX, currY);
+            }
+        }
+
+        if(currOffset = 2){
+            if(dir = 132){
+                do Graphics.kingRight2(currX, currY);
+            }else{
+                do Graphics.kingLeft2(currX, currY);
+            }
+        }
+
+        if(currOffset = 3){
+            if(dir = 132){
+                do Graphics.kingRight3(currX, currY);
+            }else{
+                do Graphics.kingLeft3(currX, currY);
+            }
+        }
+
+        if(currOffset = 4){
+            if(dir = 132){
+                do Graphics.kingRight4(currX, currY);
+            }else{
+                do Graphics.kingLeft4(currX, currY);
+            }
+        }
+
+        if(currOffset = 5){
+            if(dir = 132){
+                do Graphics.kingRight5(currX, currY);
+            }else{
+                do Graphics.kingLeft5(currX, currY);
+            }
+        }
+
+        if(currOffset = 6){
+            if(dir = 132){
+                do Graphics.kingRight6(currX, currY);
+            }else{
+                do Graphics.kingLeft6(currX, currY);
+            }
+        }
+
+        if(currOffset = 7){
+            if(dir = 132){
+                do Graphics.kingRight7(currX, currY);
+            }else{
+                do Graphics.kingLeft7(currX, currY);
+            }
+        }
+
+        return;
+    }
+    
+    
+    //erase residue(ostatak) with rectangles
+    method void eraseResidue(){
+        var int x1,y1,x2,y2;
+        var int overflowX;
+        var int dir;
+
+        let dir = direction;
+        if(dir = 131){
+            let dir = prevDirection;
+        }
+
+        do Screen.setColor(0);
+
+        if(dir = 132){
+            let x1 = prevX * 16 + prevOffset;
+            let x2 = (prevX + 2) * 16 + (prevOffset * 2);
+        }else{
+            let x1 = prevX * 16 - (prevOffset * 2) - 2; 
+            let x2 = (prevX + 2) * 16 - prevOffset;
+        }
+        
+        if(~(g = Math.abs(dy))){
+            let y1 = currY;
+            let y2 = prevY;
+            
+            if(g > Math.abs(dy) & (y1 > 30)){
+                //king height: 29px 
+                //prevY, currY is for his legs
+                //have to be reversed so (x1,y1) is topLeft
+                let y1 = prevY - 30;
+                let y2 = currY - 30;
+            } 
+
+            //NOTE: 2 rectangles needed for switching sides
+            if(x2 > (511)){
+                do Screen.drawRectangle(0, y1, x2 - 511, y2);
+            }
+            if(x1 < 0){
+                do Screen.drawRectangle(511 + x1, y1, 511, y2);
+            }
+
+            let x1 = Utils.max(x1, 0);
+            let x2 = Utils.min(x2, 511);
+
+            do Screen.drawRectangle(x1,y1,x2,y2);
+            
+        }
+        
+        return;
+    }
+
+    method void render(){
+        do kingRender();
+        //horizonal residue is erased with next draw function
+        if(~(prevY = currY)){
+            do eraseResidue();
+        }
+        return;
+    }
+
+    method void computeHitbox(){
+        if(direction = 132){
+            let hitboxX = Utils.mod(currX * 16 + (currOffset * 2) + 2, 512);
+            let hitboxY = currY - 29;
+            let hitboxW = 24;
+            let hitboxH = 29;   
+        }else{
+        //TODO: probably same when currX = 0;
+            let hitboxX = (currX * 16) - (currOffset * 2) + 1;
+            let hitboxY = currY - 29;
+            let hitboxW = 24;
+            let hitboxH = 29;   
+        }
+        /*
+        do Screen.setColor(1);
+        do Screen.drawRectangle(
+            hitboxX, 
+            hitboxY, 
+            hitboxX + hitboxW, 
+            hitboxY + hitboxH
+        );
+        do Sys.wait(2000);
+        */
+        return;
+    }
+
+    method void checkForCollisions(Array Platforms, int duration){
+        //if they collide return to previous position
+        //and alter direction and dy
+        var int iter;
+        var Platform p;
+
+        do computeHitbox();
+        let iter = 0;
+        while(iter < 3){
+            let p = Platforms[iter];
+
+            //collision
+            if(
+                (p.getX() < (hitboxX + hitboxW)) &
+                ((p.getX() + p.getWidth())  > hitboxX) &
+                ((p.getY() - 1) < (hitboxY + hitboxH + 1)) &
+                ((p.getY() + p.getHeight() + 1) > hitboxY)
+            ){
+                //do Utils.debug(currX, prevX, currOffset, prevOffset, currY, prevY);
+                //    x
+                //  |____|
+                //  |    |
+                //  |    |
+                //  |    |
+                if(prevY < p.getY()){
+                    //adjust currY
+                    let currY = p.getY() - 1;
+                    let airTime = 0;
+                    let landed = true;
+                    do Output.printInt(p.getY());
+                }else{
+                    //current values are incorrect
+                    let currOffset = prevOffset;
+                    let currX = prevX;
+                    
+                    //prev head position is below platform
+                    if(
+                        ((prevY - 29) > (p.getY() + p.getHeight())) |
+                        ((prevY - 29) = (p.getY() + p.getHeight())) 
+
+                    ){
+                        let currY = prevY;
+                        //airTime big enough to start falling
+                        let airTime = ((-dy + 1) * 60) / gravity;
+                        do moveVertical(60);
+                        do Output.printChar(" ");
+                        do Output.printString("h: ");
+                        do Output.printInt(prevY);
+                        do Output.printChar(" ");
+                        do Output.printInt(currY);
+                    }else{
+                        do Output.printChar(" ");
+                        do Output.printString("a: ");
+                        do Output.printInt(prevY);
+                        do Output.printChar(" ");
+                        do Output.printInt(p.getY() + p.getHeight());
+                        //direction = 130 => set direction to 132
+                        //direction = 132 => set direction to 130
+                        do setDirection(130 + (132 - direction));
+                        let dy = dy + 1;
+                    }
+
+                    if(~(direction = 131)){
+                        do moveSideways();
+                    }
+                }
+            }
+                
+            let iter = iter + 1;
+        } 
+
+        if((duration = 0) & (~landed)){
+            //TODO: 60 IS FPS
+            //let airTime = (70 * 60) / 100;
+            let dy = 0;
+            let airTime = 60;
+            do moveVertical(60);        
+        }
+        return;
+    }
+
+    method void jump(
+            int duration, int key, int screenWidth, 
+            int FPS, Array Platforms
+    ){
+        var int frameTime;
+        var Platform p;
+
+        let frameTime = Utils.round(10000 / FPS);
+        let maxWidth = screenWidth;
+        let dy = dy * Utils.round((duration)) / 10; 
+        do setDirection(key);
+        let landed = false;
+
+        while(~landed){
+            do refresh(duration, FPS);
+
+            do checkForCollisions(Platforms, duration);
+            
+            //do Utils.debug(currX, prevX, currOffset, prevOffset, currY, prevY);
+            
+            do render();    
+            
+            let p = Platforms[0];
+            do p.draw();
+            let p = Platforms[1];
+            do p.draw();
+            let p = Platforms[2];
+            do p.draw();
+             
+            do setDirection(direction);
+            do Sys.wait(frameTime);
+        }
+        
+        //reset dy to default
+        let dy = -4;
+        return; 
+    }
+
+
+    method void dispose(){
+        do Memory.deAlloc(debug);
+        do Memory.deAlloc(this);
+        return;
+    }
 }

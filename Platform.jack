@@ -1,0 +1,40 @@
+class Platform{ 
+    field int x, y, w, h;   
+
+    //Platform is just a rectangle
+    constructor Platform new(int _x, int _y, int _w, int _h){
+        //(x,y) is top left corner
+
+        //check if coords are valid
+        if((_x + _w < 512) & (_w > 0) & (_y + _h < 256) & (_h > 0)){
+            let x = _x;
+            let y = _y;
+            let w = _w;
+            let h = _h;
+        }else{
+            do Output.printString("Wrong Platform coords");
+        }
+
+        return this;
+    }
+
+    //top left corner
+    method int getX(){return x;}
+    method int getY(){return y;}
+
+    //bottom right corner
+    method int getWidth() {return w;}
+    method int getHeight(){return h;}
+
+    method void draw(){
+        do Screen.setColor(1);
+        do Screen.drawRectangle(x, y, x + w, y + h);
+        return;
+    }
+
+    method void erase(){
+        do Screen.setColor(0);
+        do Screen.drawRectangle(x ,y , x + w, y + h);
+        return;
+    }
+}
