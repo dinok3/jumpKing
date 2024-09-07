@@ -62,22 +62,20 @@ class King{
 
     method void setY(int y){
         //Really wierd cases
+        let prevY = currY;
         if(y < 30){
-            let currY = currY - 30; 
-            //erase residue will only take care of king's
-            //hight if going downwards
-            do eraseResidue();
+            //TODO: doenst work becasue eraseResidue erases legs and not whole king an not even
+            // legs becasue moveSideways isn't called yet
             let currY = 256 - (30 - y);
-            let prevY = 255;
+            //let prevY = 255;
         }
         else{if(y > 255){
-            let prevY = currY;
-            let currY = 255 + 30;
-            do eraseResidue();
             let currY = 30 + (y - 255);
-            let prevY = 30;
+            //let prevY = 30;
+            do Output.printInt(prevX);
+            do Output.printInt(prevOffset);
         }else{
-            let prevY = currY;
+            //let prevY = currY;
             let currY = y;
         }}
         return;
@@ -132,27 +130,32 @@ class King{
     }
 
     method void moveSideways(){
+        do setX(currX);
+
         if(~(prevDirection = direction)){
-            if(direction = 132){
-                do setX(currX - 1);
-            }else{
-                do setX(currX + 1);
+            if(~(currOffset = 0)){
+                if(direction = 132){
+                    //let currX = Utils.mod(currX - 1, maxWidth);
+                    do setX(currX - 1);
+                }else{
+                    //let currX = Utils.mod(currX + 1, maxWidth);
+                    do setX(currX + 1);
+                }
             }
+
             //apply symmetry to offset
-            //it doesnt change prevOffset
-            let currOffset = (maxOffset - 1) - currOffset;
+            do setOffset(((maxOffset) - currOffset) + dx);
+        }else{
+            do setOffset(currOffset + dx);
         }
 
-        do setOffset(currOffset + dx);
-
-        if(currOffset = 0){
+        
+        if((currOffset = 0)){
             if(direction = 130){
                 do setX(currX - 1);
             }else{
                 do setX(currX + 1);
             }
-        }else{
-            do setX(currX);
         }
 
         return;
@@ -243,35 +246,42 @@ class King{
     //erase residue(ostatak) with rectangles
     method void eraseResidue(){
         var int x1,y1,x2,y2;
-        var int overflowX;
-        var int dir;
-
-        let dir = direction;
-        if(dir = 131){
-            let dir = prevDirection;
-        }
 
         do Screen.setColor(0);
+        if(~(currX = prevX) & (~(direction = prevDirection)) & (currOffset = 0)){
+            //this condition is done only for kingRender!
+            //just change prevX instead of adding new variable becasue its at the end of
+            //a frame and prevX is not used in calculating next ones
+            let prevX = currX;
+        }
 
-        if(dir = 132){
-            let x1 = prevX * 16 + prevOffset;
+        if(prevDirection = 132){
+            let x1 = prevX * 16 + (prevOffset * 2);
             let x2 = (prevX + 2) * 16 + (prevOffset * 2);
         }else{
-            let x1 = prevX * 16 - (prevOffset * 2) - 2; 
-            let x2 = (prevX + 2) * 16 - prevOffset;
+            let x1 = (prevX * 16) - (prevOffset * 2); 
+            let x2 = (prevX + 2) * 16 - (prevOffset * 2) - 3;
         }
-        
+            
         if(~(g = Math.abs(dy))){
-            let y1 = currY;
+
+
+            let y1 = currY + 1;
             let y2 = prevY;
             
+            //erase head residue
             if(g > Math.abs(dy) & (y1 > 30)){
                 //king height: 29px 
                 //prevY, currY is for his legs
                 //have to be reversed so (x1,y1) is topLeft
                 let y1 = prevY - 30;
                 let y2 = currY - 30;
-            } 
+            }
+
+            if(Math.abs(prevY - currY) > 100){
+                let y1 = prevY - 30;
+                let y2 = prevY;
+            }
 
             //NOTE: 2 rectangles needed for switching sides
             if(x2 > (511)){
@@ -287,9 +297,9 @@ class King{
             do Screen.drawRectangle(x1,y1,x2,y2);
             
         }
-        
+        //do Sys.wait(2000);
         return;
-    }
+    }   
 
     method void render(){
         do kingRender();
@@ -301,17 +311,22 @@ class King{
     }
 
     method void computeHitbox(){
-        if(direction = 132){
-            let hitboxX = Utils.mod(currX * 16 + (currOffset * 2) + 2, 512);
+        var int dir;
+        
+        let dir = direction;
+        if(direction = 131){
+            let dir = prevDirection;
+        }
+        if(dir = 132){
+            let hitboxX = (currX * 16) + (currOffset * 2) + 2;
             let hitboxY = currY - 29;
             let hitboxW = 24;
             let hitboxH = 29;   
         }else{
-        //TODO: probably same when currX = 0;
             let hitboxX = (currX * 16) - (currOffset * 2) + 1;
             let hitboxY = currY - 29;
             let hitboxW = 24;
-            let hitboxH = 29;   
+            let hitboxH = 29;
         }
         /*
         do Screen.setColor(1);
@@ -321,9 +336,18 @@ class King{
             hitboxX + hitboxW, 
             hitboxY + hitboxH
         );
-        do Sys.wait(2000);
+        //do Sys.wait(2000);
         */
         return;
+    }
+
+    method boolean topBounce(Platform p){
+        do Output.printInt(555);
+        return (
+            ((prevY - 29) > (p.getY() + p.getHeight())) |
+            ((prevY - 29) = (p.getY() + p.getHeight())) |
+            ((Math.abs(currY - prevY) > 100) & ((p.getY() + p.getHeight()) > (currY - 29)))
+        );
     }
 
     method void checkForCollisions(Array Platforms, int duration){
@@ -338,59 +362,39 @@ class King{
             let p = Platforms[iter];
 
             //collision
-            if(
-                (p.getX() < (hitboxX + hitboxW)) &
-                ((p.getX() + p.getWidth())  > hitboxX) &
-                ((p.getY() - 1) < (hitboxY + hitboxH + 1)) &
-                ((p.getY() + p.getHeight() + 1) > hitboxY)
-            ){
-                //do Utils.debug(currX, prevX, currOffset, prevOffset, currY, prevY);
-                //    x
-                //  |____|
-                //  |    |
-                //  |    |
-                //  |    |
-                if(prevY < p.getY()){
-                    //adjust currY
-                    let currY = p.getY() - 1;
-                    let airTime = 0;
-                    let landed = true;
-                    do Output.printInt(p.getY());
+            if(p.collided(hitboxX, hitboxY, hitboxW, hitboxH))
+            {
+
+            if((Math.abs(currY - prevY) < 100) & ((prevY < p.getY()) | (prevY = p.getY()))){
+                //adjust currY
+                //do Output.printInt(112);
+                let currY = p.getY() - 1;
+                let airTime = 0;
+                let landed = true;
+            }else{
+                //current values are incorrect
+                let currOffset = prevOffset;
+                let currX = prevX;
+                
+                //prev head position is below platform
+                if(topBounce(p)){
+                    let currY = prevY;
+                    //airTime big enough to start falling
+                    let airTime = ((-dy + 1) * 60) / gravity;
+                    do moveVertical(60);
                 }else{
-                    //current values are incorrect
-                    let currOffset = prevOffset;
-                    let currX = prevX;
-                    
-                    //prev head position is below platform
-                    if(
-                        ((prevY - 29) > (p.getY() + p.getHeight())) |
-                        ((prevY - 29) = (p.getY() + p.getHeight())) 
+                    //direction = 130 => set direction to 132
+                    //direction = 132 => set direction to 130
+                    do setDirection(130 + (132 - direction));
 
-                    ){
-                        let currY = prevY;
-                        //airTime big enough to start falling
-                        let airTime = ((-dy + 1) * 60) / gravity;
-                        do moveVertical(60);
-                        do Output.printChar(" ");
-                        do Output.printString("h: ");
-                        do Output.printInt(prevY);
-                        do Output.printChar(" ");
-                        do Output.printInt(currY);
-                    }else{
-                        do Output.printChar(" ");
-                        do Output.printString("a: ");
-                        do Output.printInt(prevY);
-                        do Output.printChar(" ");
-                        do Output.printInt(p.getY() + p.getHeight());
-                        //direction = 130 => set direction to 132
-                        //direction = 132 => set direction to 130
-                        do setDirection(130 + (132 - direction));
-                        let dy = dy + 1;
-                    }
+                    //increases g for 0.5
+                    let airTime = airTime + (30 / gravity);
+                }
 
-                    if(~(direction = 131)){
-                        do moveSideways();
-                    }
+                if(~(direction = 131)){
+                    do moveSideways();
+                }
+
                 }
             }
                 
@@ -400,8 +404,10 @@ class King{
         if((duration = 0) & (~landed)){
             //TODO: 60 IS FPS
             //let airTime = (70 * 60) / 100;
-            let dy = 0;
-            let airTime = 60;
+            let gravity = gravity - dy;
+            if(airTime < 60){
+                let airTime = 60;
+            }
             do moveVertical(60);        
         }
         return;
@@ -425,7 +431,7 @@ class King{
 
             do checkForCollisions(Platforms, duration);
             
-            //do Utils.debug(currX, prevX, currOffset, prevOffset, currY, prevY);
+            do Utils.debug(currX, prevX, currOffset, prevOffset, g, g);
             
             do render();    
             

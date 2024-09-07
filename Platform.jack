@@ -6,12 +6,20 @@ class Platform{
         //(x,y) is top left corner
 
         //check if coords are valid
-        if((_x + _w < 512) & (_w > 0) & (_y + _h < 256) & (_h > 0)){
+        if(
+            (_x + _w < 512)  & 
+            (_w > 0)         &
+            (_x > -1)        &
+            (_y + _h < 256)  & 
+            (_h > 0)         &
+            (_y > 30)
+        ){
             let x = _x;
             let y = _y;
             let w = _w;
             let h = _h;
         }else{
+            do Output.printInt(_h);
             do Output.printString("Wrong Platform coords");
         }
 
@@ -36,5 +44,22 @@ class Platform{
         do Screen.setColor(0);
         do Screen.drawRectangle(x ,y , x + w, y + h);
         return;
+    }
+
+    method boolean collided(int x2, int y2, int w2, int h2){
+        /*
+            x2 can be looked at in range 0..511 or any range
+            because of screen width
+        */
+
+        return (
+            (
+                ((x < (x2 + w2)) & ((x + w) > x2))
+                |
+                ((x < (Utils.mod(x2, 512) + w2)) & ((x + w) > Utils.mod(x2, 512)))
+            )
+            &
+            ((y - 1) < (y2 + h2 + 1)) & ((y + h + 1) > y2)
+        );
     }
 }

@@ -11,6 +11,11 @@ push argument 2
 push constant 0
 gt
 and
+push argument 0
+push constant 1
+neg
+gt
+and
 push argument 1
 push argument 3
 add
@@ -19,6 +24,10 @@ lt
 and
 push argument 3
 push constant 0
+gt
+and
+push argument 1
+push constant 30
 gt
 and
 if-goto IF_TRUE0
@@ -34,6 +43,9 @@ push argument 3
 pop this 3
 goto IF_END0
 label IF_FALSE0
+push argument 3
+call Output.printInt 1
+pop temp 0
 push constant 21
 call String.new 1
 push constant 87
@@ -138,4 +150,53 @@ add
 call Screen.drawRectangle 4
 pop temp 0
 push constant 0
+return
+function Platform.collided 0
+push argument 0
+pop pointer 0
+push this 0
+push argument 1
+push argument 3
+add
+lt
+push this 0
+push this 2
+add
+push argument 1
+gt
+and
+push this 0
+push argument 1
+push constant 512
+call Utils.mod 2
+push argument 3
+add
+lt
+push this 0
+push this 2
+add
+push argument 1
+push constant 512
+call Utils.mod 2
+gt
+and
+or
+push this 1
+push constant 1
+sub
+push argument 2
+push argument 4
+add
+push constant 1
+add
+lt
+and
+push this 1
+push this 3
+add
+push constant 1
+add
+push argument 2
+gt
+and
 return

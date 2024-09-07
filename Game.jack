@@ -16,7 +16,7 @@ class Game{
         let FPS = 60;
         let duration = 0; 
         let screenWidth = 32;
-        let king = King.new(31, 99);
+        let king = King.new(2, 99);
         let Platforms = Array.new(3);
         //TODO: an array of levels
         //this is object variable that stores base address of that object
@@ -67,8 +67,8 @@ class Game{
         var Platform p;
 
         let Platforms[0] = Platform.new(0,100, 100, 155); 
-        let Platforms[1] = Platform.new(411, 100, 100, 155); 
-        let Platforms[2] = Platform.new(411 ,100 - 69, 20, 30); 
+        let Platforms[1] = Platform.new(411, 100 - 40, 100, 155); 
+        let Platforms[2] = Platform.new(411 ,100 - 60, 20, 30); 
         
         let p = Platforms[0];
         do p.draw();
