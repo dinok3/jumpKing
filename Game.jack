@@ -65,7 +65,7 @@ class Game{
     method void run(){
         var int frameTime;
         var Platform p;
-
+        
         let Platforms[0] = Platform.new(0,100, 100, 155); 
         let Platforms[1] = Platform.new(411, 100 - 40, 100, 155); 
         let Platforms[2] = Platform.new(411 ,100 - 60, 20, 30); 

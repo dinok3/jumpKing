@@ -6,8 +6,8 @@ class King{
     field int dx, dy; 
     field int gravity, g, airTime;
     field int hitboxX, hitboxY, hitboxW, hitboxH;
-    field boolean landed;
-    field Array debug;
+    field boolean landed, changeInLevel;
+    field int FPS;
 
 
     constructor King new(int x, int y){
@@ -43,10 +43,10 @@ class King{
         let prevDirection = 132;
         let direction = 132; //130 - left, 132 - right
         let landed = false;
+        let changeInLevel = false;
 
         let maxOffset = 8;
         let maxHeight = 256;
-        let debug = Array.new(10);
 
         do render();
 
@@ -64,19 +64,15 @@ class King{
         //Really wierd cases
         let prevY = currY;
         if(y < 30){
-            //TODO: doenst work becasue eraseResidue erases legs and not whole king an not even
-            // legs becasue moveSideways isn't called yet
             let currY = 256 - (30 - y);
-            //let prevY = 255;
+            let changeInLevel = true;
         }
         else{if(y > 255){
             let currY = 30 + (y - 255);
-            //let prevY = 30;
-            do Output.printInt(prevX);
-            do Output.printInt(prevOffset);
+            let changeInLevel = true;
         }else{
-            //let prevY = currY;
             let currY = y;
+            let changeInLevel = false;
         }}
         return;
     }
@@ -108,7 +104,7 @@ class King{
         //      by calling for example setX(currX)
         if(duration > 0){
             //move up
-            do moveVertical(FPS);
+            do moveVertical();
         }else{
             do setY(currY);
         }
@@ -122,7 +118,7 @@ class King{
         return;
     }
 
-    method void moveVertical(int FPS){
+    method void moveVertical(){
         let g = (airTime * gravity) / FPS;
         do setY(currY + dy + g);
         let airTime = airTime + 1;
@@ -135,10 +131,9 @@ class King{
         if(~(prevDirection = direction)){
             if(~(currOffset = 0)){
                 if(direction = 132){
-                    //let currX = Utils.mod(currX - 1, maxWidth);
-                    do setX(currX - 1);
+                    do setX(currX - 1); 
                 }else{
-                    //let currX = Utils.mod(currX + 1, maxWidth);
+               
                     do setX(currX + 1);
                 }
             }
@@ -243,7 +238,7 @@ class King{
     }
     
     
-    //erase residue(ostatak) with rectangles
+    //erase residue with rectangles
     method void eraseResidue(){
         var int x1,y1,x2,y2;
 
@@ -264,8 +259,6 @@ class King{
         }
             
         if(~(g = Math.abs(dy))){
-
-
             let y1 = currY + 1;
             let y2 = prevY;
             
@@ -278,7 +271,7 @@ class King{
                 let y2 = currY - 30;
             }
 
-            if(Math.abs(prevY - currY) > 100){
+            if(changeInLevel){
                 let y1 = prevY - 30;
                 let y2 = prevY;
             }
@@ -297,7 +290,6 @@ class King{
             do Screen.drawRectangle(x1,y1,x2,y2);
             
         }
-        //do Sys.wait(2000);
         return;
     }   
 
@@ -341,14 +333,7 @@ class King{
         return;
     }
 
-    method boolean topBounce(Platform p){
-        do Output.printInt(555);
-        return (
-            ((prevY - 29) > (p.getY() + p.getHeight())) |
-            ((prevY - 29) = (p.getY() + p.getHeight())) |
-            ((Math.abs(currY - prevY) > 100) & ((p.getY() + p.getHeight()) > (currY - 29)))
-        );
-    }
+    
 
     method void checkForCollisions(Array Platforms, int duration){
         //if they collide return to previous position
@@ -357,6 +342,7 @@ class King{
         var Platform p;
 
         do computeHitbox();
+
         let iter = 0;
         while(iter < 3){
             let p = Platforms[iter];
@@ -365,9 +351,8 @@ class King{
             if(p.collided(hitboxX, hitboxY, hitboxW, hitboxH))
             {
 
-            if((Math.abs(currY - prevY) < 100) & ((prevY < p.getY()) | (prevY = p.getY()))){
+            if(p.grounded(prevY, changeInLevel)){
                 //adjust currY
-                //do Output.printInt(112);
                 let currY = p.getY() - 1;
                 let airTime = 0;
                 let landed = true;
@@ -377,16 +362,14 @@ class King{
                 let currX = prevX;
                 
                 //prev head position is below platform
-                if(topBounce(p)){
+                if(p.topBounce(prevY, currY, changeInLevel)){
                     let currY = prevY;
                     //airTime big enough to start falling
-                    let airTime = ((-dy + 1) * 60) / gravity;
-                    do moveVertical(60);
+                    let airTime = ((-dy + 1) * FPS) / gravity;
+                    do moveVertical();
                 }else{
-                    //direction = 130 => set direction to 132
-                    //direction = 132 => set direction to 130
+                    //reverse unless direction is 131
                     do setDirection(130 + (132 - direction));
-
                     //increases g for 0.5
                     let airTime = airTime + (30 / gravity);
                 }
@@ -402,24 +385,23 @@ class King{
         } 
 
         if((duration = 0) & (~landed)){
-            //TODO: 60 IS FPS
-            //let airTime = (70 * 60) / 100;
             let gravity = gravity - dy;
-            if(airTime < 60){
-                let airTime = 60;
+            if(airTime < FPS){
+                let airTime = FPS;
             }
-            do moveVertical(60);        
+            do moveVertical();
         }
         return;
     }
 
     method void jump(
             int duration, int key, int screenWidth, 
-            int FPS, Array Platforms
+            int fps, Array Platforms
     ){
         var int frameTime;
         var Platform p;
 
+        let FPS = fps;
         let frameTime = Utils.round(10000 / FPS);
         let maxWidth = screenWidth;
         let dy = dy * Utils.round((duration)) / 10; 
@@ -431,7 +413,7 @@ class King{
 
             do checkForCollisions(Platforms, duration);
             
-            do Utils.debug(currX, prevX, currOffset, prevOffset, g, g);
+            //do Utils.debug(currX, prevX, currOffset, prevOffset, g, g);
             
             do render();    
             
@@ -448,12 +430,11 @@ class King{
         
         //reset dy to default
         let dy = -4;
+        let gravity = -dy + 1;
         return; 
     }
 
-
     method void dispose(){
-        do Memory.deAlloc(debug);
         do Memory.deAlloc(this);
         return;
     }

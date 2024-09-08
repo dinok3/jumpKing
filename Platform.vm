@@ -27,7 +27,7 @@ push constant 0
 gt
 and
 push argument 1
-push constant 30
+push constant 39
 gt
 and
 if-goto IF_TRUE0
@@ -43,9 +43,6 @@ push argument 3
 pop this 3
 goto IF_END0
 label IF_FALSE0
-push argument 3
-call Output.printInt 1
-pop temp 0
 push constant 21
 call String.new 1
 push constant 87
@@ -200,3 +197,52 @@ push argument 2
 gt
 and
 return
+function Platform.grounded 0
+push argument 0
+pop pointer 0
+push argument 2
+not
+push argument 1
+push this 1
+lt
+push argument 1
+push this 1
+eq
+or
+and
+return
+function Platform.topBounce 0
+push argument 0
+pop pointer 0
+push argument 3
+not
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push argument 1
+push constant 29
+sub
+push this 1
+push this 3
+add
+gt
+push argument 1
+push constant 29
+sub
+push this 1
+push this 3
+add
+eq
+or
+return
+goto IF_END0
+label IF_FALSE0
+push this 1
+push this 3
+add
+push argument 2
+push constant 29
+sub
+gt
+return
+label IF_END0

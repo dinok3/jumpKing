@@ -1,5 +1,5 @@
 function King.new 0
-push constant 22
+push constant 23
 call Memory.alloc 1
 pop pointer 0
 push argument 0
@@ -34,13 +34,12 @@ push constant 132
 pop this 9
 push constant 0
 pop this 20
+push constant 0
+pop this 21
 push constant 8
 pop this 0
 push constant 256
 pop this 2
-push constant 10
-call Array.new 1
-pop this 21
 push pointer 0
 call King.render 1
 pop temp 0
@@ -74,6 +73,9 @@ push argument 1
 sub
 sub
 pop this 7
+push constant 0
+not
+pop this 21
 goto IF_END0
 label IF_FALSE0
 push argument 1
@@ -88,16 +90,15 @@ push constant 255
 sub
 add
 pop this 7
-push this 3
-call Output.printInt 1
-pop temp 0
-push this 5
-call Output.printInt 1
-pop temp 0
+push constant 0
+not
+pop this 21
 goto IF_END1
 label IF_FALSE1
 push argument 1
 pop this 7
+push constant 0
+pop this 21
 label IF_END1
 label IF_END0
 push constant 0
@@ -155,8 +156,7 @@ if-goto IF_TRUE0
 goto IF_FALSE0
 label IF_TRUE0
 push pointer 0
-push argument 2
-call King.moveVertical 2
+call King.moveVertical 1
 pop temp 0
 goto IF_END0
 label IF_FALSE0
@@ -194,7 +194,7 @@ pop pointer 0
 push this 15
 push this 13
 call Math.multiply 2
-push argument 1
+push this 22
 call Math.divide 2
 pop this 14
 push pointer 0
@@ -532,7 +532,7 @@ return
 function King.eraseResidue 4
 push argument 0
 pop pointer 0
-push constant 0
+push constant 1
 call Screen.setColor 1
 pop temp 0
 push this 6
@@ -635,12 +635,7 @@ push constant 30
 sub
 pop local 3
 label IF_FALSE3
-push this 4
-push this 7
-sub
-call Math.abs 1
-push constant 100
-gt
+push this 21
 if-goto IF_TRUE4
 goto IF_FALSE4
 label IF_TRUE4
@@ -778,49 +773,6 @@ pop this 19
 label IF_END1
 push constant 0
 return
-function King.topBounce 0
-push argument 0
-pop pointer 0
-push constant 555
-call Output.printInt 1
-pop temp 0
-push this 4
-push constant 29
-sub
-push argument 1
-call Platform.getY 1
-push argument 1
-call Platform.getHeight 1
-add
-gt
-push this 4
-push constant 29
-sub
-push argument 1
-call Platform.getY 1
-push argument 1
-call Platform.getHeight 1
-add
-eq
-or
-push this 7
-push this 4
-sub
-call Math.abs 1
-push constant 100
-gt
-push argument 1
-call Platform.getY 1
-push argument 1
-call Platform.getHeight 1
-add
-push this 7
-push constant 29
-sub
-gt
-and
-or
-return
 function King.checkForCollisions 2
 push argument 0
 pop pointer 0
@@ -850,22 +802,10 @@ call Platform.collided 5
 if-goto IF_TRUE0
 goto IF_FALSE0
 label IF_TRUE0
-push this 7
-push this 4
-sub
-call Math.abs 1
-push constant 100
-lt
-push this 4
 push local 1
-call Platform.getY 1
-lt
 push this 4
-push local 1
-call Platform.getY 1
-eq
-or
-and
+push this 21
+call Platform.grounded 3
 if-goto IF_TRUE1
 goto IF_FALSE1
 label IF_TRUE1
@@ -885,9 +825,11 @@ push this 5
 pop this 8
 push this 3
 pop this 6
-push pointer 0
 push local 1
-call King.topBounce 2
+push this 4
+push this 7
+push this 21
+call Platform.topBounce 4
 if-goto IF_TRUE2
 goto IF_FALSE2
 label IF_TRUE2
@@ -897,14 +839,13 @@ push this 12
 neg
 push constant 1
 add
-push constant 60
+push this 22
 call Math.multiply 2
 push this 13
 call Math.divide 2
 pop this 15
 push pointer 0
-push constant 60
-call King.moveVertical 2
+call King.moveVertical 1
 pop temp 0
 goto IF_END2
 label IF_FALSE2
@@ -956,17 +897,16 @@ push this 12
 sub
 pop this 13
 push this 15
-push constant 60
+push this 22
 lt
 if-goto IF_TRUE5
 goto IF_FALSE5
 label IF_TRUE5
-push constant 60
+push this 22
 pop this 15
 label IF_FALSE5
 push pointer 0
-push constant 60
-call King.moveVertical 2
+call King.moveVertical 1
 pop temp 0
 label IF_FALSE4
 push constant 0
@@ -974,8 +914,10 @@ return
 function King.jump 2
 push argument 0
 pop pointer 0
-push constant 10000
 push argument 4
+pop this 22
+push constant 10000
+push this 22
 call Math.divide 2
 call Utils.round 1
 pop local 0
@@ -1001,21 +943,13 @@ not
 if-goto WHILE_END0
 push pointer 0
 push argument 1
-push argument 4
+push this 22
 call King.refresh 3
 pop temp 0
 push pointer 0
 push argument 5
 push argument 1
 call King.checkForCollisions 3
-pop temp 0
-push this 6
-push this 3
-push this 8
-push this 5
-push this 14
-push this 14
-call Utils.debug 6
 pop temp 0
 push pointer 0
 call King.render 1
@@ -1064,9 +998,6 @@ return
 function King.dispose 0
 push argument 0
 pop pointer 0
-push this 21
-call Memory.deAlloc 1
-pop temp 0
 push pointer 0
 call Memory.deAlloc 1
 pop temp 0

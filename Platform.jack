@@ -12,14 +12,13 @@ class Platform{
             (_x > -1)        &
             (_y + _h < 256)  & 
             (_h > 0)         &
-            (_y > 30)
+            (_y > 39)
         ){
             let x = _x;
             let y = _y;
             let w = _w;
             let h = _h;
         }else{
-            do Output.printInt(_h);
             do Output.printString("Wrong Platform coords");
         }
 
@@ -61,5 +60,21 @@ class Platform{
             &
             ((y - 1) < (y2 + h2 + 1)) & ((y + h + 1) > y2)
         );
+    }
+
+    method boolean grounded(int prevY,int changeInLevel){
+        //TODO: can't land if change in level
+        return (~changeInLevel) & ((prevY < y) | (prevY = y));
+    }
+
+    method boolean topBounce(int prevY, int currY, int changeInLevel){
+        if(~changeInLevel){
+            return (
+                ((prevY - 29) > (y + h)) |
+                ((prevY - 29) = (y + h))
+            );
+        }else{
+            return (y + h) > (currY - 29);
+        }
     }
 }
