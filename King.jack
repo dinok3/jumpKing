@@ -366,7 +366,6 @@ class King{
                     let currY = prevY;
                     //airTime big enough to start falling
                     let airTime = ((-dy + 1) * FPS) / gravity;
-                    do moveVertical();
                 }else{
                     //reverse unless direction is 131
                     do setDirection(130 + (132 - direction));
@@ -412,7 +411,7 @@ class King{
     ){
         var int frameTime;
         var Level l;
-        var boolean newChange;
+        var boolean bounceBack;
 
         let l = map.getCurrLevel();
         let FPS = fps;
@@ -427,11 +426,12 @@ class King{
 
             if(changeInLevel){
                 let l = changeLevel(map, l);
+                
             }
         
-            let newChange = checkForCollisions(l, duration);
+            let bounceBack = checkForCollisions(l, duration);
 
-            if(newChange){
+            if(bounceBack){
                 let l = changeLevel(map, l);
             }
 

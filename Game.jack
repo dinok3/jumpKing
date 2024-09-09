@@ -42,7 +42,7 @@ class Game{
         do l2.addPlatform(0, 50, 30, 10);
 
         let l3 = Level.new(15);
-        do l3.addPlatform(155,40, 30, 215);
+        do l3.addPlatform(155, 40, 30, 215);
         do l3.addPlatform(185, 50, 20, 10);
         do l3.addPlatform(185, 110, 20, 10);
         do l3.addPlatform(185, 215, 20, 10);

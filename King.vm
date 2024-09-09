@@ -864,9 +864,6 @@ call Math.multiply 2
 push this 13
 call Math.divide 2
 pop this 15
-push pointer 0
-call King.moveVertical 1
-pop temp 0
 goto IF_END2
 label IF_FALSE2
 push pointer 0
