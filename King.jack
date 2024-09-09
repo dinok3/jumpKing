@@ -99,7 +99,7 @@ class King{
     method int getY()       { return currY; }
     method int getOffset()  { return currOffset; }
      
-    method void refresh(int duration, int FPS){
+    method void refresh(int duration){
         //NOTE: tracking inputs: on every refresh, update previous variables
         //      by calling for example setX(currX)
         if(duration > 0){
@@ -422,7 +422,7 @@ class King{
         let landed = false;
 
         while(~landed){
-            do refresh(duration, FPS);
+            do refresh(duration);
 
             if(changeInLevel){
                 let l = changeLevel(map, l);
