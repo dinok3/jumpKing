@@ -1,0 +1,58 @@
+class Map{
+    field Array map;
+    field int currLevel;
+    field int numOfLevels;
+
+    constructor Map new(int n){
+        let map = Array.new(n);
+        let numOfLevels = 0;
+        let currLevel = 0;
+        return this;
+    }
+
+    method void next(){
+        if(currLevel < (numOfLevels - 1)){
+            let currLevel = currLevel + 1;
+        }
+        return; 
+    }
+
+    method void prev(){
+        if(currLevel > 0){
+            let currLevel = currLevel - 1;
+        }
+        return;
+    }
+
+    method Level getCurrLevel(){
+        var Level l;
+        let l = map[currLevel];
+        return l;
+    }
+
+    method void addLevel(Level l){
+        let map[numOfLevels] = l;
+        let numOfLevels = numOfLevels + 1;
+        return;
+    }
+
+    method int level(){
+        return currLevel;
+    }
+
+    method void dispose(){
+        var Level l;
+        var int count;
+        
+        let count = 0;
+        while (count < numOfLevels) {
+            let l = map[count];
+            do l.dispose(); 
+            let count = count + 1;
+        }
+        
+        do Memory.deAlloc(map);
+        do Memory.deAlloc(this);
+        return;
+    }
+}

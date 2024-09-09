@@ -1,0 +1,94 @@
+class Level{
+    field int capacity, size;
+    field Array Platforms;
+
+    constructor Level new(int n){
+        let capacity = n;
+        let Platforms = Array.new(capacity);
+        let size = 0;
+        return this;
+    }
+
+    
+    method void render(){
+        var int count;
+        var Platform p;
+
+        let count = 0;
+        while(count < size){
+            let p = Platforms[count];
+            do p.draw();
+            let count = count + 1;
+        }
+        return;
+    }
+
+    method void clear(){
+        var int count;
+        var Platform p;
+
+        let count = 0;
+        while(count < size){
+            let p = Platforms[count];
+            do p.erase();
+            let count = count + 1;
+        }
+        return;
+    }
+
+    method void addPlatform(int x, int y, int w, int h){
+        var Platform p;
+        let p = Platform.new(x, y, w, h);
+
+        if(size = capacity){
+            do reInitialize(capacity * 2);
+        }
+
+        let Platforms[size] = p;
+        let size = size + 1;
+       
+        return;
+    }
+
+    method void reInitialize(int c){
+        var Array arr;
+        var int count;
+
+        let capacity = c;
+        let arr = Array.new(capacity);
+
+        let count = 0;
+        while(count < size){
+            let arr[count] = Platforms[count];
+            let count = count + 1;
+        }
+        do Platforms.dispose();
+        let Platforms = arr;
+        return;
+    }
+
+
+    method Platform getPlatform(int i){
+        var Platform p;
+        let p = Platforms[i];
+        return p;
+    }
+
+    method int getSize(){
+        return size;
+    }
+
+    method void dispose(){
+        var Platform p;
+        var int count;
+        let count = 0;
+        while (count < size) {
+            let p = Platforms[count];
+            do p.dispose();
+            let count = count + 1;
+        }
+        do Memory.deAlloc(Platforms);
+        do Memory.deAlloc(this);
+        return;
+    }
+}
