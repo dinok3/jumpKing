@@ -162,20 +162,30 @@ add
 push argument 1
 gt
 and
+push argument 1
+push argument 3
+add
+push constant 511
+gt
 push this 0
+push argument 1
+push argument 3
+add
+push constant 512
+call Utils.mod 2
+lt
+and
+or
+push argument 1
+push constant 0
+lt
 push argument 1
 push constant 512
 call Utils.mod 2
-push argument 3
-add
-lt
 push this 0
 push this 2
 add
-push argument 1
-push constant 512
-call Utils.mod 2
-gt
+lt
 and
 or
 push this 1
@@ -246,3 +256,11 @@ sub
 gt
 return
 label IF_END0
+function Platform.dispose 0
+push argument 0
+pop pointer 0
+push pointer 0
+call Memory.deAlloc 1
+pop temp 0
+push constant 0
+return

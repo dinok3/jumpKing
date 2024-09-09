@@ -47,15 +47,19 @@ class Platform{
 
     method boolean collided(int x2, int y2, int w2, int h2){
         /*
-            x2 can be looked at in range 0..511 or any range
-            because of screen width
+        horizonal checks
+            1. no transition between sides
+            2. king peeking on the right side
+            3. king peeking on the left side
         */
 
         return (
             (
                 ((x < (x2 + w2)) & ((x + w) > x2))
                 |
-                ((x < (Utils.mod(x2, 512) + w2)) & ((x + w) > Utils.mod(x2, 512)))
+                (((x2 + w2) > 511) & (x < (Utils.mod(x2 + w2, 512))))
+                |
+                ((x2 < 0) & (Utils.mod(x2, 512) < (x + w)))
             )
             &
             ((y - 1) < (y2 + h2 + 1)) & ((y + h + 1) > y2)
@@ -63,8 +67,7 @@ class Platform{
     }
 
     method boolean grounded(int prevY,int changeInLevel){
-        //TODO: can't land if change in level
-        return (~changeInLevel) & ((prevY < y) | (prevY = y));
+        return ((~changeInLevel) & ((prevY < y) | (prevY = y)));
     }
 
     method boolean topBounce(int prevY, int currY, int changeInLevel){
@@ -76,5 +79,10 @@ class Platform{
         }else{
             return (y + h) > (currY - 29);
         }
+    }
+
+    method void dispose(){
+        do Memory.deAlloc(this);
+        return;
     }
 }

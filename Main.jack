@@ -3,7 +3,6 @@ class Main{
 		var Game game;
 		var int k;
 		var boolean color;
-		//TODO: objasni zasto je game an HEAP-u	
 		let game = Game.new();
 		
 		do game.run();

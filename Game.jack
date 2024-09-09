@@ -8,7 +8,7 @@ class Game{
     field int FPS;
     field King king;
     field int screenWidth;
-    field Array Platforms;
+    field Map map;
 
     constructor Game new(){ 
         //initialze objects
@@ -16,11 +16,64 @@ class Game{
         let FPS = 60;
         let duration = 0; 
         let screenWidth = 32;
-        let king = King.new(2, 99);
-        let Platforms = Array.new(3);
-        //TODO: an array of levels
+        let king = King.new(15, 220);
+
+        do initializeLevels();
         //this is object variable that stores base address of that object
         return this;
+    }
+
+    method void initializeLevels(){
+        var Level l1, l2, l3, l4;
+
+        let map = Map.new(4);
+
+        let l1 = Level.new(4);
+        do l1.addPlatform(0, 105, 150, 150);
+        do l1.addPlatform(361, 105, 150, 150);
+        do l1.addPlatform(200, 40, 100, 20);
+        do l1.addPlatform(150, 220, 361-150, 35);
+
+        let l2 = Level.new(4);
+        do l2.addPlatform(411, 240, 50, 15);
+        do l2.addPlatform(0, 170, 100, 10);
+        do l2.addPlatform(200,70, 100, 20);
+        do l2.addPlatform(481, 50, 30, 10);
+        do l2.addPlatform(0, 50, 30, 10);
+
+        let l3 = Level.new(15);
+        do l3.addPlatform(155,40, 30, 215);
+        do l3.addPlatform(185, 50, 20, 10);
+        do l3.addPlatform(185, 110, 20, 10);
+        do l3.addPlatform(185, 215, 20, 10);
+        do l3.addPlatform(140, 180, 20, 10);
+        do l3.addPlatform(140, 60, 20, 10);
+
+        do l3.addPlatform(325,40 ,30, 215);
+        do l3.addPlatform(355,60 ,20, 10);
+        do l3.addPlatform(355,150 ,20, 10);
+        do l3.addPlatform(310, 120, 20, 10);
+        do l3.addPlatform(310, 170, 20, 10);
+
+        do l3.addPlatform(155-110, 220, 60, 5);
+        do l3.addPlatform(355 + 50, 220, 60, 5);
+
+        do l3.addPlatform(155-130, 130, 60, 5);
+        do l3.addPlatform(355 + 70, 130, 60, 5);
+
+        let l4 = Level.new(6);
+        do l4.addPlatform(0, 40, 511, 3);
+        do l4.addPlatform(155, 65, 200, 1);
+        do l4.addPlatform(155, 100, 200, 1);
+        do l4.addPlatform(355 + 80, 165, 50, 5);
+        do l4.addPlatform(155 - 100, 190, 50, 5);
+        do l4.addPlatform(300, 250, 50, 5);
+        
+        do map.addLevel(l1);
+        do map.addLevel(l2);
+        do map.addLevel(l3);
+        do map.addLevel(l4);
+        return;
     }
 
     method void handle_input(){
@@ -64,28 +117,24 @@ class Game{
 
     method void run(){
         var int frameTime;
-        var Platform p;
-        
-        let Platforms[0] = Platform.new(0,100, 100, 155); 
-        let Platforms[1] = Platform.new(411, 100 - 40, 100, 155); 
-        let Platforms[2] = Platform.new(411 ,100 - 60, 20, 30); 
-        
-        let p = Platforms[0];
-        do p.draw();
-        let p = Platforms[1];
-        do p.draw();
-        let p = Platforms[2];
-        do p.draw();
+        var Level l;
+
+        let l = map.getCurrLevel();
+        do l.render();
         while(~quit){
             do handle_input();
-            do king.jump(duration, keyPressed, screenWidth, FPS, Platforms);
+            let quit = king.jump(duration, keyPressed, screenWidth, FPS, map);
             do Sys.wait(50); 
         }
+
+        do Output.moveCursor(1, 16);
+        do Output.printString("You made it. Congratulations!");
     
         return;
     }
     
     method void dispose(){
+        do Memory.deAlloc(map);
         do Memory.deAlloc(king);
         do Memory.deAlloc(this);
         return;

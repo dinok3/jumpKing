@@ -106,7 +106,11 @@ class King{
             //move up
             do moveVertical();
         }else{
-            do setY(currY);
+            if((~landed)){
+                do moveVertical();
+            }else{
+                do setY(currY);
+            }
         }
 
         if(~(direction = 131)){
@@ -320,32 +324,25 @@ class King{
             let hitboxW = 24;
             let hitboxH = 29;
         }
-        /*
-        do Screen.setColor(1);
-        do Screen.drawRectangle(
-            hitboxX, 
-            hitboxY, 
-            hitboxX + hitboxW, 
-            hitboxY + hitboxH
-        );
-        //do Sys.wait(2000);
-        */
+
         return;
     }
 
     
 
-    method void checkForCollisions(Array Platforms, int duration){
+    method boolean checkForCollisions(Level l, int duration){
         //if they collide return to previous position
         //and alter direction and dy
         var int iter;
         var Platform p;
+        var boolean levelChange;
+        let levelChange = false;
 
         do computeHitbox();
 
         let iter = 0;
-        while(iter < 3){
-            let p = Platforms[iter];
+        while(iter < l.getSize()){
+            let p = l.getPlatform(iter);
 
             //collision
             if(p.collided(hitboxX, hitboxY, hitboxW, hitboxH))
@@ -363,6 +360,9 @@ class King{
                 
                 //prev head position is below platform
                 if(p.topBounce(prevY, currY, changeInLevel)){
+                    if(changeInLevel){
+                        let levelChange = true;
+                    }
                     let currY = prevY;
                     //airTime big enough to start falling
                     let airTime = ((-dy + 1) * FPS) / gravity;
@@ -389,18 +389,32 @@ class King{
             if(airTime < FPS){
                 let airTime = FPS;
             }
-            do moveVertical();
+            
         }
-        return;
+        return levelChange;
     }
 
-    method void jump(
+    method Level changeLevel(Map map, Level l){
+        do l.clear();
+        
+        if(currY > 150){
+            do map.next();
+        }else{
+            do map.prev();
+        }
+        let l = map.getCurrLevel();
+        return l;
+    }
+
+    method boolean jump(
             int duration, int key, int screenWidth, 
-            int fps, Array Platforms
+            int fps, Map map
     ){
         var int frameTime;
-        var Platform p;
+        var Level l;
+        var boolean newChange;
 
+        let l = map.getCurrLevel();
         let FPS = fps;
         let frameTime = Utils.round(10000 / FPS);
         let maxWidth = screenWidth;
@@ -411,27 +425,38 @@ class King{
         while(~landed){
             do refresh(duration, FPS);
 
-            do checkForCollisions(Platforms, duration);
-            
-            //do Utils.debug(currX, prevX, currOffset, prevOffset, g, g);
-            
+            if(changeInLevel){
+                let l = changeLevel(map, l);
+            }
+        
+            let newChange = checkForCollisions(l, duration);
+
+            if(newChange){
+                let l = changeLevel(map, l);
+            }
+
             do render();    
             
-            let p = Platforms[0];
-            do p.draw();
-            let p = Platforms[1];
-            do p.draw();
-            let p = Platforms[2];
-            do p.draw();
+            do l.render();
              
             do setDirection(direction);
             do Sys.wait(frameTime);
         }
         
+        if(
+            (map.level() = 3) & 
+            (currY > 65) &
+            (currY < 100) 
+        ){
+            //he must land on that platform otherwise loop
+            //is still on
+            return true;
+        }
+
         //reset dy to default
         let dy = -4;
         let gravity = -dy + 1;
-        return; 
+        return false; 
     }
 
     method void dispose(){
