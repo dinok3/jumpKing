@@ -1,6 +1,6 @@
 class Game{
     //screen : 512 * 256
-	//start position: 32(po 16 u stupcu) * 255(redova) + 15(0..31)
+	//start position: 32(16 word groups) * 255(rows before current) + 15(words groups, 0..31)
         
     field int keyPressed;
     field int duration; // hold
@@ -19,7 +19,7 @@ class Game{
         let king = King.new(15, 220);
 
         do initializeLevels();
-        //this is object variable that stores base address of that object
+        //this is an object variable that stores base address of that object
         return this;
     }
 
@@ -124,6 +124,8 @@ class Game{
         while(~quit){
             do handle_input();
             let quit = king.jump(duration, keyPressed, screenWidth, FPS, map);
+            //without wait each arrow pressed is recorded multiple times for some reason
+            //should be implemented with ticks counter instead of Sys.wait
             do Sys.wait(50); 
         }
 
