@@ -13,7 +13,7 @@ class Game{
     constructor Game new(){ 
         //initialze objects
         let quit = false;
-        let FPS = 60;
+        let FPS = 120;
         let duration = 0; 
         let screenWidth = 32;
         let king = King.new(15, 220);
@@ -126,7 +126,7 @@ class Game{
             let quit = king.jump(duration, keyPressed, screenWidth, FPS, map);
             //without wait each arrow pressed is recorded multiple times for some reason
             //should be implemented with ticks counter instead of Sys.wait
-            do Sys.wait(50); 
+            //do Sys.wait(50); 
         }
 
         do Output.moveCursor(1, 16);

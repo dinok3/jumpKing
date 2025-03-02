@@ -205,7 +205,7 @@ pop pointer 0
 push this 15
 push this 13
 call Math.multiply 2
-push this 22
+push constant 60
 call Math.divide 2
 pop this 14
 push pointer 0

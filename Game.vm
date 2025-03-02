@@ -4,7 +4,7 @@ call Memory.alloc 1
 pop pointer 0
 push constant 0
 pop this 2
-push constant 60
+push constant 120
 pop this 3
 push constant 0
 pop this 1

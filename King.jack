@@ -123,7 +123,7 @@ class King{
     }
 
     method void moveVertical(){
-        let g = (airTime * gravity) / FPS;
+        let g = (airTime * gravity) / 60;
         do setY(currY + dy + g);
         let airTime = airTime + 1;
         return;
