@@ -2,20 +2,30 @@ function Game.new 0
 push constant 7
 call Memory.alloc 1
 pop pointer 0
-push constant 0
+push constant 5
 pop this 2
-push constant 120
-pop this 3
 push constant 0
 pop this 1
-push constant 32
-pop this 5
+push constant 0
+pop this 3
 push constant 15
 push constant 220
 call King.new 2
 pop this 4
+push this 4
+push constant 4
+neg
+call King.setDy 2
+pop temp 0
+push this 4
+push constant 5
+call King.setGravity 2
+pop temp 0
 push pointer 0
 call Game.initializeLevels 1
+pop temp 0
+push this 6
+call Level.render 1
 pop temp 0
 push pointer 0
 return
@@ -24,7 +34,7 @@ push argument 0
 pop pointer 0
 push constant 4
 call Map.new 1
-pop this 6
+pop this 5
 push constant 4
 call Level.new 1
 pop local 0
@@ -261,25 +271,28 @@ push constant 50
 push constant 5
 call Level.addPlatform 5
 pop temp 0
-push this 6
+push this 5
 push local 0
 call Map.addLevel 2
 pop temp 0
-push this 6
+push this 5
 push local 1
 call Map.addLevel 2
 pop temp 0
-push this 6
+push this 5
 push local 2
 call Map.addLevel 2
 pop temp 0
-push this 6
+push this 5
 push local 3
 call Map.addLevel 2
 pop temp 0
+push this 5
+call Map.getCurrLevel 1
+pop this 6
 push constant 0
 return
-function Game.handle_input 1
+function Game.handle_input 2
 push argument 0
 pop pointer 0
 push constant 0
@@ -287,6 +300,8 @@ not
 pop local 0
 push constant 0
 pop this 1
+push constant 0
+pop local 1
 label WHILE_EXP0
 push local 0
 not
@@ -335,7 +350,7 @@ goto IF_FALSE2
 label IF_TRUE2
 push constant 0
 not
-pop this 2
+pop this 3
 push constant 0
 pop local 0
 label IF_FALSE2
@@ -365,32 +380,140 @@ call Utils.clamp 1
 pop this 1
 push constant 0
 return
-function Game.run 2
+function Game.changeLevel 0
 push argument 0
 pop pointer 0
 push this 6
-call Map.getCurrLevel 1
-pop local 1
-push local 1
-call Level.render 1
+call Level.clear 1
 pop temp 0
+push this 4
+call King.getY 1
+push constant 150
+gt
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push this 5
+call Map.next 1
+pop temp 0
+goto IF_END0
+label IF_FALSE0
+push this 5
+call Map.prev 1
+pop temp 0
+label IF_END0
+push this 5
+call Map.getCurrLevel 1
+pop this 6
+push constant 0
+return
+function Game.isGameOver 0
+push argument 0
+pop pointer 0
+push this 5
+call Map.level 1
+push constant 3
+eq
+push this 4
+call King.getY 1
+push constant 65
+gt
+and
+push this 4
+call King.getY 1
+push constant 100
+lt
+and
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push constant 0
+not
+pop this 3
+label IF_FALSE0
+push constant 0
+return
+function Game.run 2
+push argument 0
+pop pointer 0
+push constant 0
+not
+pop local 0
 label WHILE_EXP0
-push this 2
+push this 3
 not
 not
 if-goto WHILE_END0
+push local 0
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
 push pointer 0
 call Game.handle_input 1
 pop temp 0
 push this 4
-push this 1
 push this 0
-push this 5
-push this 3
+call King.setDirection 2
+pop temp 0
+push this 4
+push constant 4
+neg
+push this 1
+call Utils.round 1
+call Math.multiply 2
+push constant 10
+call Math.divide 2
+call King.setDy 2
+pop temp 0
+label IF_FALSE0
+push this 4
+push this 1
+call King.refresh 2
+pop temp 0
+push this 4
+call King.onDiffLevel 1
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
+push pointer 0
+call Game.changeLevel 1
+pop temp 0
+label IF_FALSE1
+push this 4
 push this 6
-call King.jump 6
-pop this 2
-push constant 50
+push this 1
+call King.checkForCollisions 3
+pop local 1
+push local 1
+if-goto IF_TRUE2
+goto IF_FALSE2
+label IF_TRUE2
+push pointer 0
+call Game.changeLevel 1
+pop temp 0
+push this 4
+push constant 0
+call King.switchLevel 2
+pop temp 0
+label IF_FALSE2
+push this 4
+call King.render 1
+pop temp 0
+push this 6
+call Level.render 1
+pop temp 0
+push this 4
+push this 4
+call King.getDirection 1
+call King.setDirection 2
+pop temp 0
+push this 4
+call King.landed 1
+pop local 0
+push pointer 0
+call Game.isGameOver 1
+pop temp 0
+push this 2
 call Sys.wait 1
 pop temp 0
 goto WHILE_EXP0
@@ -466,7 +589,7 @@ return
 function Game.dispose 0
 push argument 0
 pop pointer 0
-push this 6
+push this 5
 call Memory.deAlloc 1
 pop temp 0
 push this 4

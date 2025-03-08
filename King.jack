@@ -1,15 +1,14 @@
 class King{
-    field int maxOffset, maxWidth, maxHeight; //maxWidth is max number of locations
+    field int maxOffset, maxDeltaX, maxHeight; //maxDeltaX is max number of locations
     field int prevX, prevY, prevOffset;
     field int currX, currY, currOffset;
     field int direction, prevDirection;
     field int dx, dy; 
     field int gravity, g, airTime;
     field int hitboxX, hitboxY, hitboxW, hitboxH;
-    field boolean landed, changeInLevel;
+    field boolean landed, switchLevel;
     field int FPS;
-
-
+    
     constructor King new(int x, int y){
         /*
         location = y * 32 + x;
@@ -35,18 +34,18 @@ class King{
         let prevOffset = 0;
         
         let dx = 1;
-        let dy = -4;
-        let gravity = -dy + 1; //airTime = 48 => dy = g
         let g = 0;
         let airTime = 0;
+        let FPS = 60;
+        let landed = true;
 
         let prevDirection = 132;
         let direction = 132; //130 - left, 132 - right
-        let landed = false;
-        let changeInLevel = false;
+        let switchLevel = false;
 
         let maxOffset = 8;
         let maxHeight = 256;
+        let maxDeltaX = 32;
 
         do render();
 
@@ -54,26 +53,41 @@ class King{
     }
 
     // setters
-    method void setX(int x){
-        let prevX = currX;
-        let currX = Utils.mod(x, maxWidth); 
+    method void setGravity(int g){
+        let gravity = g;
+        return;
+    }
+    method void setDy(int delta_y){ 
+        let dy = delta_y;
         return;
     }
 
+
+    method void setX(int x){
+        let prevX = currX;
+        let currX = Utils.mod(x, maxDeltaX); 
+        return;
+    }
+
+
     method void setY(int y){
-        //Really wierd cases
         let prevY = currY;
         if(y < 30){
             let currY = 256 - (30 - y);
-            let changeInLevel = true;
+            let switchLevel = true;
         }
         else{if(y > 255){
             let currY = 30 + (y - 255);
-            let changeInLevel = true;
+            let switchLevel = true;
         }else{
             let currY = y;
-            let changeInLevel = false;
+            let switchLevel = false;
         }}
+        return;
+    }
+
+    method void switchLevel(boolean b){
+        let switchLevel = b;
         return;
     }
 
@@ -98,19 +112,18 @@ class King{
     method int getX()       { return currX; }
     method int getY()       { return currY; }
     method int getOffset()  { return currOffset; }
+    method boolean landed() { return landed; }
+    method boolean onDiffLevel(){ return switchLevel; }
+    method int getDirection(){return direction;}
      
     method void refresh(int duration){
-        //NOTE: tracking inputs: on every refresh, update previous variables
-        //      by calling for example setX(currX)
-        if(duration > 0){
-            //move up
+        //NOTE: 
+            //tracking inputs: on every refresh, update previous variables by calling for example setX(currX)
+        
+        if((duration > 0) | (~landed)){
             do moveVertical();
         }else{
-            if((~landed)){
-                do moveVertical();
-            }else{
-                do setY(currY);
-            }
+            do setY(currY);
         }
 
         if(~(direction = 131)){
@@ -122,8 +135,12 @@ class King{
         return;
     }
 
+    //airTime - num of frames of a jump action
+    //for dy = gravity:
+    //   when airTime is same as FPS => g = gravity = dy => king is at the highest point
+    //since division is integer only we first do multiplication 
     method void moveVertical(){
-        let g = (airTime * gravity) / 60;
+        let g = (airTime * gravity) / FPS;
         do setY(currY + dy + g);
         let airTime = airTime + 1;
         return;
@@ -135,10 +152,10 @@ class King{
         if(~(prevDirection = direction)){
             if(~(currOffset = 0)){
                 if(direction = 132){
-                    do setX(currX - 1); 
+                    do setX(currX - dx); 
                 }else{
                
-                    do setX(currX + 1);
+                    do setX(currX + dx);
                 }
             }
 
@@ -148,12 +165,12 @@ class King{
             do setOffset(currOffset + dx);
         }
 
-        
+
         if((currOffset = 0)){
             if(direction = 130){
-                do setX(currX - 1);
+                do setX(currX - dx);
             }else{
-                do setX(currX + 1);
+                do setX(currX + dx);
             }
         }
 
@@ -275,7 +292,7 @@ class King{
                 let y2 = currY - 30;
             }
 
-            if(changeInLevel){
+            if(switchLevel){
                 let y1 = prevY - 30;
                 let y2 = prevY;
             }
@@ -290,7 +307,6 @@ class King{
 
             let x1 = Utils.max(x1, 0);
             let x2 = Utils.min(x2, 511);
-
             do Screen.drawRectangle(x1,y1,x2,y2);
             
         }
@@ -331,12 +347,12 @@ class King{
     
 
     method boolean checkForCollisions(Level l, int duration){
-        //if they collide return to previous position
+        //if they collide update position to previous one
         //and alter direction and dy
         var int iter;
         var Platform p;
-        var boolean levelChange;
-        let levelChange = false;
+        var boolean bounceBack;
+        let landed = false;
 
         do computeHitbox();
 
@@ -345,118 +361,49 @@ class King{
             let p = l.getPlatform(iter);
 
             //collision
-            if(p.collided(hitboxX, hitboxY, hitboxW, hitboxH))
-            {
-
-            if(p.grounded(prevY, changeInLevel)){
-                //adjust currY
-                let currY = p.getY() - 1;
-                let airTime = 0;
-                let landed = true;
-            }else{
-                //current values are incorrect
-                let currOffset = prevOffset;
-                let currX = prevX;
-                
-                //prev head position is below platform
-                if(p.topBounce(prevY, currY, changeInLevel)){
-                    if(changeInLevel){
-                        let levelChange = true;
-                    }
-                    let currY = prevY;
-                    //airTime big enough to start falling
-                    let airTime = ((-dy + 1) * FPS) / gravity;
+            if(p.collided(hitboxX, hitboxY, hitboxW, hitboxH)){
+                if(p.grounded(prevY, switchLevel)){
+                    //adjust currY
+                    let currY = p.getY() - 1;
+                    let airTime = 0;
+                    let landed = true;
                 }else{
-                    //reverse unless direction is 131
-                    do setDirection(130 + (132 - direction));
-                    //increases g for 0.5
-                    let airTime = airTime + (30 / gravity);
-                }
+                    // go back to previous position
+                    let currOffset = prevOffset;
+                    let currX = prevX;
+                    
+                    //prev head position is below platform
+                    if(p.topBounce(prevY, currY, switchLevel)){
+                        let currY = prevY;
+                        //airTime big enough to start falling
+                        if(airTime < FPS){
+                            let airTime = FPS;
+                        }
+                        if(switchLevel){
+                            let bounceBack = true;
+                        }
+                        
+                    }else{
+                        //reverse unless direction is 131
+                        do setDirection(130 + (132 - direction));
+                    }
 
-                if(~(direction = 131)){
-                    do moveSideways();
-                }
+                    if(~(direction = 131)){
+                        do moveSideways();
+                    }
 
-                }
+                    }
             }
                 
             let iter = iter + 1;
         } 
 
         if((duration = 0) & (~landed)){
-            let gravity = gravity - dy;
             if(airTime < FPS){
                 let airTime = FPS;
             }
-            
         }
-        return levelChange;
-    }
-
-    method Level changeLevel(Map map, Level l){
-        do l.clear();
-        
-        if(currY > 150){
-            do map.next();
-        }else{
-            do map.prev();
-        }
-        let l = map.getCurrLevel();
-        return l;
-    }
-
-    method boolean jump(
-            int duration, int key, int screenWidth, 
-            int fps, Map map
-    ){
-        var int frameTime;
-        var Level l;
-        var boolean bounceBack;
-
-        let l = map.getCurrLevel();
-        let FPS = fps;
-        let frameTime = Utils.round(10000 / FPS);
-        let maxWidth = screenWidth;
-        let dy = dy * Utils.round((duration)) / 10; 
-        do setDirection(key);
-        let landed = false;
-
-        while(~landed){
-            do refresh(duration);
-
-            if(changeInLevel){
-                let l = changeLevel(map, l);
-                
-            }
-        
-            let bounceBack = checkForCollisions(l, duration);
-
-            if(bounceBack){
-                let l = changeLevel(map, l);
-            }
-
-            do render();    
-            
-            do l.render();
-             
-            do setDirection(direction);
-            do Sys.wait(frameTime);
-        }
-        
-        if(
-            (map.level() = 3) & 
-            (currY > 65) &
-            (currY < 100) 
-        ){
-            //he must land on that platform otherwise loop
-            //is still on
-            return true;
-        }
-
-        //reset dy to default
-        let dy = -4;
-        let gravity = -dy + 1;
-        return false; 
+        return bounceBack;
     }
 
     method void dispose(){

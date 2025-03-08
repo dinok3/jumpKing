@@ -4,21 +4,24 @@ class Game{
         
     field int keyPressed;
     field int duration; // hold
+    field int frameDelay;
     field boolean quit;
-    field int FPS;
     field King king;
-    field int screenWidth;
     field Map map;
+    field Level currLevel;
 
     constructor Game new(){ 
         //initialze objects
-        let quit = false;
-        let FPS = 120;
+        let frameDelay = 5; //two decimal frameDelay is MUCH MUCH slower
         let duration = 0; 
-        let screenWidth = 32;
+        let quit = false;
         let king = King.new(15, 220);
+        do king.setDy(-4);
+        do king.setGravity(5);
 
         do initializeLevels();
+        
+        do currLevel.render();
         //this is an object variable that stores base address of that object
         return this;
     }
@@ -73,13 +76,17 @@ class Game{
         do map.addLevel(l2);
         do map.addLevel(l3);
         do map.addLevel(l4);
+
+        let currLevel = map.getCurrLevel();
         return;
     }
 
     method void handle_input(){
         var boolean active;
+        var int iter;
 		let active = true;
         let duration = 0;
+        let iter = 0;
 		while(active){
 			let keyPressed = Keyboard.keyPressed();
 
@@ -115,20 +122,64 @@ class Game{
         return;
     }
 
-    method void run(){
-        var int frameTime;
-        var Level l;
-
-        let l = map.getCurrLevel();
-        do l.render();
-        while(~quit){
-            do handle_input();
-            let quit = king.jump(duration, keyPressed, screenWidth, FPS, map);
-            //without wait each arrow pressed is recorded multiple times for some reason
-            //should be implemented with ticks counter instead of Sys.wait
-            //do Sys.wait(50); 
+    method void changeLevel(){
+        do currLevel.clear(); 
+        if(king.getY() > 150){
+            do map.next();
+        }else{
+            do map.prev();
         }
+        let currLevel = map.getCurrLevel();
+        return;
+    }
 
+    method boolean isGameOver(){
+        if(
+            (map.level() = 3) & 
+            (king.getY() > 65) &
+            (king.getY() < 100) 
+        ){
+            let quit = true;
+        }
+        return false;
+    }
+
+    method void run(){
+        var boolean allowPress, bounceBack; //TODO: remove bounce back;
+
+        let allowPress = true;
+        
+
+        while(~quit){
+            if(allowPress){
+                do handle_input();
+                do king.setDirection(keyPressed);
+                do king.setDy((-4) * Utils.round((duration)) / 10);
+            }
+
+            do king.refresh(duration);
+
+            if(king.onDiffLevel()){
+               do changeLevel();
+            }
+            let bounceBack = king.checkForCollisions(currLevel, duration);
+
+            if(bounceBack){
+               do changeLevel();
+               do king.switchLevel(false);
+            }
+            
+
+            do king.render();                
+            do currLevel.render();
+            do king.setDirection(king.getDirection());
+
+            let allowPress = king.landed();
+            
+            do isGameOver();
+            do Sys.wait(frameDelay); 
+        }
+        //endscreen
         do Output.moveCursor(1, 16);
         do Output.printString("You made it. Congratulations!");
     

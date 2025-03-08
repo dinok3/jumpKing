@@ -66,12 +66,12 @@ class Platform{
         );
     }
 
-    method boolean grounded(int prevY,int changeInLevel){
-        return ((~changeInLevel) & ((prevY < y) | (prevY = y)));
+    method boolean grounded(int prevY,boolean switchLevel){
+        return ((~switchLevel) & ((prevY < y) | (prevY = y)));
     }
 
-    method boolean topBounce(int prevY, int currY, int changeInLevel){
-        if(~changeInLevel){
+    method boolean topBounce(int prevY, int currY, boolean switchLevel){
+        if(~switchLevel){
             return (
                 ((prevY - 29) > (y + h)) |
                 ((prevY - 29) = (y + h))

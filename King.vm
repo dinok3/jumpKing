@@ -16,34 +16,45 @@ push constant 0
 pop this 5
 push constant 1
 pop this 11
-push constant 4
-neg
-pop this 12
-push this 12
-neg
-push constant 1
-add
-pop this 13
 push constant 0
 pop this 14
 push constant 0
 pop this 15
+push constant 60
+pop this 22
+push constant 0
+not
+pop this 20
 push constant 132
 pop this 10
 push constant 132
 pop this 9
-push constant 0
-pop this 20
 push constant 0
 pop this 21
 push constant 8
 pop this 0
 push constant 256
 pop this 2
+push constant 32
+pop this 1
 push pointer 0
 call King.render 1
 pop temp 0
 push pointer 0
+return
+function King.setGravity 0
+push argument 0
+pop pointer 0
+push argument 1
+pop this 13
+push constant 0
+return
+function King.setDy 0
+push argument 0
+pop pointer 0
+push argument 1
+pop this 12
+push constant 0
 return
 function King.setX 0
 push argument 0
@@ -103,6 +114,13 @@ label IF_END1
 label IF_END0
 push constant 0
 return
+function King.switchLevel 0
+push argument 0
+pop pointer 0
+push argument 1
+pop this 21
+push constant 0
+return
 function King.setOffset 0
 push argument 0
 pop pointer 0
@@ -146,12 +164,30 @@ push argument 0
 pop pointer 0
 push this 8
 return
+function King.landed 0
+push argument 0
+pop pointer 0
+push this 20
+return
+function King.onDiffLevel 0
+push argument 0
+pop pointer 0
+push this 21
+return
+function King.getDirection 0
+push argument 0
+pop pointer 0
+push this 9
+return
 function King.refresh 0
 push argument 0
 pop pointer 0
 push argument 1
 push constant 0
 gt
+push this 20
+not
+or
 if-goto IF_TRUE0
 goto IF_FALSE0
 label IF_TRUE0
@@ -160,34 +196,23 @@ call King.moveVertical 1
 pop temp 0
 goto IF_END0
 label IF_FALSE0
-push this 20
-not
-if-goto IF_TRUE1
-goto IF_FALSE1
-label IF_TRUE1
-push pointer 0
-call King.moveVertical 1
-pop temp 0
-goto IF_END1
-label IF_FALSE1
 push pointer 0
 push this 7
 call King.setY 2
 pop temp 0
-label IF_END1
 label IF_END0
 push this 9
 push constant 131
 eq
 not
-if-goto IF_TRUE2
-goto IF_FALSE2
-label IF_TRUE2
+if-goto IF_TRUE1
+goto IF_FALSE1
+label IF_TRUE1
 push pointer 0
 call King.moveSideways 1
 pop temp 0
-goto IF_END2
-label IF_FALSE2
+goto IF_END1
+label IF_FALSE1
 push pointer 0
 push this 6
 call King.setX 2
@@ -196,7 +221,7 @@ push pointer 0
 push this 8
 call King.setOffset 2
 pop temp 0
-label IF_END2
+label IF_END1
 push constant 0
 return
 function King.moveVertical 0
@@ -205,7 +230,7 @@ pop pointer 0
 push this 15
 push this 13
 call Math.multiply 2
-push constant 60
+push this 22
 call Math.divide 2
 pop this 14
 push pointer 0
@@ -251,7 +276,7 @@ goto IF_FALSE2
 label IF_TRUE2
 push pointer 0
 push this 6
-push constant 1
+push this 11
 sub
 call King.setX 2
 pop temp 0
@@ -259,7 +284,7 @@ goto IF_END2
 label IF_FALSE2
 push pointer 0
 push this 6
-push constant 1
+push this 11
 add
 call King.setX 2
 pop temp 0
@@ -296,7 +321,7 @@ goto IF_FALSE4
 label IF_TRUE4
 push pointer 0
 push this 6
-push constant 1
+push this 11
 sub
 call King.setX 2
 pop temp 0
@@ -304,7 +329,7 @@ goto IF_END4
 label IF_FALSE4
 push pointer 0
 push this 6
-push constant 1
+push this 11
 add
 call King.setX 2
 pop temp 0
@@ -788,7 +813,7 @@ function King.checkForCollisions 3
 push argument 0
 pop pointer 0
 push constant 0
-pop local 2
+pop this 20
 push pointer 0
 call King.computeHitbox 1
 pop temp 0
@@ -845,25 +870,25 @@ call Platform.topBounce 4
 if-goto IF_TRUE2
 goto IF_FALSE2
 label IF_TRUE2
-push this 21
+push this 4
+pop this 7
+push this 15
+push this 22
+lt
 if-goto IF_TRUE3
 goto IF_FALSE3
 label IF_TRUE3
+push this 22
+pop this 15
+label IF_FALSE3
+push this 21
+if-goto IF_TRUE4
+goto IF_FALSE4
+label IF_TRUE4
 push constant 0
 not
 pop local 2
-label IF_FALSE3
-push this 4
-pop this 7
-push this 12
-neg
-push constant 1
-add
-push this 22
-call Math.multiply 2
-push this 13
-call Math.divide 2
-pop this 15
+label IF_FALSE4
 goto IF_END2
 label IF_FALSE2
 push pointer 0
@@ -874,24 +899,18 @@ sub
 add
 call King.setDirection 2
 pop temp 0
-push this 15
-push constant 30
-push this 13
-call Math.divide 2
-add
-pop this 15
 label IF_END2
 push this 9
 push constant 131
 eq
 not
-if-goto IF_TRUE4
-goto IF_FALSE4
-label IF_TRUE4
+if-goto IF_TRUE5
+goto IF_FALSE5
+label IF_TRUE5
 push pointer 0
 call King.moveSideways 1
 pop temp 0
-label IF_FALSE4
+label IF_FALSE5
 label IF_END1
 label IF_FALSE0
 push local 0
@@ -906,156 +925,20 @@ eq
 push this 20
 not
 and
-if-goto IF_TRUE5
-goto IF_FALSE5
-label IF_TRUE5
-push this 13
-push this 12
-sub
-pop this 13
-push this 15
-push this 22
-lt
 if-goto IF_TRUE6
 goto IF_FALSE6
 label IF_TRUE6
+push this 15
+push this 22
+lt
+if-goto IF_TRUE7
+goto IF_FALSE7
+label IF_TRUE7
 push this 22
 pop this 15
+label IF_FALSE7
 label IF_FALSE6
-label IF_FALSE5
 push local 2
-return
-function King.changeLevel 0
-push argument 0
-pop pointer 0
-push argument 2
-call Level.clear 1
-pop temp 0
-push this 7
-push constant 150
-gt
-if-goto IF_TRUE0
-goto IF_FALSE0
-label IF_TRUE0
-push argument 1
-call Map.next 1
-pop temp 0
-goto IF_END0
-label IF_FALSE0
-push argument 1
-call Map.prev 1
-pop temp 0
-label IF_END0
-push argument 1
-call Map.getCurrLevel 1
-pop argument 2
-push argument 2
-return
-function King.jump 3
-push argument 0
-pop pointer 0
-push argument 5
-call Map.getCurrLevel 1
-pop local 1
-push argument 4
-pop this 22
-push constant 10000
-push this 22
-call Math.divide 2
-call Utils.round 1
-pop local 0
-push argument 3
-pop this 1
-push this 12
-push argument 1
-call Utils.round 1
-call Math.multiply 2
-push constant 10
-call Math.divide 2
-pop this 12
-push pointer 0
-push argument 2
-call King.setDirection 2
-pop temp 0
-push constant 0
-pop this 20
-label WHILE_EXP0
-push this 20
-not
-not
-if-goto WHILE_END0
-push pointer 0
-push argument 1
-call King.refresh 2
-pop temp 0
-push this 21
-if-goto IF_TRUE0
-goto IF_FALSE0
-label IF_TRUE0
-push pointer 0
-push argument 5
-push local 1
-call King.changeLevel 3
-pop local 1
-label IF_FALSE0
-push pointer 0
-push local 1
-push argument 1
-call King.checkForCollisions 3
-pop local 2
-push local 2
-if-goto IF_TRUE1
-goto IF_FALSE1
-label IF_TRUE1
-push pointer 0
-push argument 5
-push local 1
-call King.changeLevel 3
-pop local 1
-label IF_FALSE1
-push pointer 0
-call King.render 1
-pop temp 0
-push local 1
-call Level.render 1
-pop temp 0
-push pointer 0
-push this 9
-call King.setDirection 2
-pop temp 0
-push local 0
-call Sys.wait 1
-pop temp 0
-goto WHILE_EXP0
-label WHILE_END0
-push argument 5
-call Map.level 1
-push constant 3
-eq
-push this 7
-push constant 65
-gt
-and
-push this 7
-push constant 100
-lt
-and
-if-goto IF_TRUE2
-goto IF_FALSE2
-label IF_TRUE2
-push constant 0
-not
-return
-label IF_FALSE2
-push constant 4
-neg
-pop this 12
-push this 12
-neg
-push constant 1
-add
-pop this 13
-push constant 0
 return
 function King.dispose 0
 push argument 0
