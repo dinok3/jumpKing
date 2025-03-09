@@ -41,32 +41,4 @@ class Utils{
         }
         return y;
     }
-
-    function void debug(
-        int currX, int prevX, 
-        int currOffset,int prevOffset,
-        int currY,int prevY
-    ){
-        do Output.moveCursor(0, 0);
-
-        do Output.printString("currX: ");
-        do Output.printInt(currX); 
-        
-        do Output.printString(" prevX: ");
-        do Output.printInt(prevX);
-        
-        do Output.printString(" currO: ");
-        do Output.printInt(currOffset);
-        
-        do Output.printString(" prevO: ");
-        do Output.printInt(prevOffset);
-        
-        do Output.printString(" currY: ");
-        do Output.printInt(currY);
-        
-        do Output.printString(" prevY: ");
-        do Output.printInt(prevY);
-        do Output.printString(" ");
-        return;
-    }
 }

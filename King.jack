@@ -374,9 +374,6 @@ class King{
                     
                     //prev head position is below platform
                     if(p.topBounce(prevY, currY, levelShift)){
-                        do Output.printInt(prevY);
-                        do Output.printString(" ");
-                        do Output.printInt(currY);
                         let currY = prevY;
                         //airTime big enough to start falling
                         if(airTime < FPS){
