@@ -166,7 +166,7 @@ class Game{
 
             if(bounceBack){
                do changeLevel();
-               do king.switchLevel(false);
+               do king.shiftLevel(false);
             }
             
 

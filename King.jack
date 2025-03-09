@@ -6,7 +6,7 @@ class King{
     field int dx, dy; 
     field int gravity, g, airTime;
     field int hitboxX, hitboxY, hitboxW, hitboxH;
-    field boolean landed, switchLevel;
+    field boolean landed, levelShift;
     field int FPS;
     
     constructor King new(int x, int y){
@@ -41,7 +41,7 @@ class King{
 
         let prevDirection = 132;
         let direction = 132; //130 - left, 132 - right
-        let switchLevel = false;
+        let levelShift = false;
 
         let maxOffset = 8;
         let maxHeight = 256;
@@ -74,20 +74,20 @@ class King{
         let prevY = currY;
         if(y < 30){
             let currY = 256 - (30 - y);
-            let switchLevel = true;
+            let levelShift = true;
         }
         else{if(y > 255){
             let currY = 30 + (y - 255);
-            let switchLevel = true;
+            let levelShift = true;
         }else{
             let currY = y;
-            let switchLevel = false;
+            let levelShift = false;
         }}
         return;
     }
 
-    method void switchLevel(boolean b){
-        let switchLevel = b;
+    method void shiftLevel(boolean b){
+        let levelShift = b;
         return;
     }
 
@@ -113,7 +113,7 @@ class King{
     method int getY()       { return currY; }
     method int getOffset()  { return currOffset; }
     method boolean landed() { return landed; }
-    method boolean onDiffLevel(){ return switchLevel; }
+    method boolean onDiffLevel(){ return levelShift; }
     method int getDirection(){return direction;}
      
     method void refresh(int duration){
@@ -292,7 +292,7 @@ class King{
                 let y2 = currY - 30;
             }
 
-            if(switchLevel){
+            if(levelShift){
                 let y1 = prevY - 30;
                 let y2 = prevY;
             }
@@ -362,7 +362,7 @@ class King{
 
             //collision
             if(p.collided(hitboxX, hitboxY, hitboxW, hitboxH)){
-                if(p.grounded(prevY, switchLevel)){
+                if(p.grounded(prevY, levelShift)){
                     //adjust currY
                     let currY = p.getY() - 1;
                     let airTime = 0;
@@ -373,13 +373,16 @@ class King{
                     let currX = prevX;
                     
                     //prev head position is below platform
-                    if(p.topBounce(prevY, currY, switchLevel)){
+                    if(p.topBounce(prevY, currY, levelShift)){
+                        do Output.printInt(prevY);
+                        do Output.printString(" ");
+                        do Output.printInt(currY);
                         let currY = prevY;
                         //airTime big enough to start falling
                         if(airTime < FPS){
                             let airTime = FPS;
                         }
-                        if(switchLevel){
+                        if(levelShift){
                             let bounceBack = true;
                         }
                         

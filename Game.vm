@@ -493,7 +493,7 @@ call Game.changeLevel 1
 pop temp 0
 push this 4
 push constant 0
-call King.switchLevel 2
+call King.shiftLevel 2
 pop temp 0
 label IF_FALSE2
 push this 4
